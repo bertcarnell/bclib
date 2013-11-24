@@ -35,15 +35,19 @@ namespace oacpp {
 template<class T>
 class matrix {
    private:
-      size_t rows;  /**< number of rows */
-      size_t cols;  /**< number of columns */
+      size_type rows;  /**< number of rows */
+      size_type cols;  /**< number of columns */
       std::vector<T> elements; /**< array of elements */
    public:
+       /**
+        * Define the size_type the same as it is defined for std::vector
+        */
+       typedef std::vector<T>::size_type size_type;
        /**
         * row size
         * @return the number of rows in the matrix
         */
-       size_t rowsize() const 
+       size_type rowsize() const 
        {
            return rows;
        }
@@ -51,7 +55,7 @@ class matrix {
         * column size
         * @return the number of columns in the matrix
         */
-       size_t colsize() const 
+       size_type colsize() const 
        {
            return cols;
        }
@@ -63,7 +67,7 @@ class matrix {
        * @param j column index (zero based)
        * @return a reference to the requested element
        */
-      T& operator()( size_t i, size_t j ) 
+      T& operator()(size_type i, size_type j) 
       {
           return elements[i*cols+j];
       }
@@ -74,7 +78,7 @@ class matrix {
        * @param j column index (zero based)
        * @return a const reference to the requested element
        */
-      const T& operator()( size_t i, size_t j ) const 
+      const T& operator()(size_type i, size_type j) const 
       {
          return elements[i*cols+j];
       }
@@ -85,7 +89,7 @@ class matrix {
        * @param j column index (zero based)
        * @return a const reference to the requested element
        */
-      const T& at(size_t i, size_t j) const 
+      const T& at(size_type i, size_type j) const 
       {
          return elements.at(i*cols+j);
       }
@@ -96,7 +100,7 @@ class matrix {
        * @param j column index (zero based)
        * @return a reference to the requested element
        */
-      T& at(size_t i, size_t j) 
+      T& at(size_type i, size_type j) 
       {
          return elements.at(i*cols+j);
       }
@@ -106,7 +110,7 @@ class matrix {
        * @param i vector index (zero based)
        * @return a reference to the requested element
        */
-      T& at(size_t loc)
+      T& at(size_type loc)
       {
           return elements.at(loc);
       }
@@ -116,7 +120,7 @@ class matrix {
        * @param i vector index (zero based)
        * @return const a reference to the requested element
        */
-      const T& at(size_t loc) const
+      const T& at(size_type loc) const
       {
           return elements.at(loc);
       }
@@ -137,26 +141,26 @@ class matrix {
        * @param rows the number of rows in the matrix
        * @param cols the number of columns in the matrix
        */
-      matrix( size_t rows, size_t cols );
+      matrix(size_type rows, size_type cols);
       /**
        * Constructor
        * @param rows the number of rows in the matrix
        * @param cols the number of columns in the matrix
        * @param elementArray an array to use as the initial values
        */
-      matrix( size_t rows, size_t cols, const T* elementArray );
+      matrix(size_type rows, size_type cols, const T* elementArray);
       /**
        * Constructor
        * @param rows the number of rows in the matrix
        * @param cols the number of columns in the matrix
        * @param elementVector a std::vector to use as the initial values
        */
-      matrix( size_t rows, size_t cols, std::vector<T> elementVector );
+      matrix(size_type rows, size_type cols, std::vector<T> elementVector);
       /**
        * Copy Constructor
        * @param the matrix to be copied
        */
-      matrix( const matrix<T>& );
+      matrix(const matrix<T> &);
       /**
        * Destructor
        */
@@ -174,7 +178,7 @@ class matrix {
        * @param the right hand side matrix
        * @return true if the matrices are equivalent
        */
-      bool operator==( const matrix<T>& ) const;
+      bool operator==( const matrix<T> &) const;
 
       /**
        * Get a row of the matrix as a std::vector
@@ -182,28 +186,28 @@ class matrix {
        * @param i the row number
        * @return a vector representation of that row
        */
-      std::vector<T> getrow(size_t i) const;
+      std::vector<T> getrow(size_type i) const;
       /**
        * Get a row of the matrix as a std::vector
        * @throws std::out_of_range when the row is not in range
        * @param i the row number
        * @return a vector representation of that row
        */
-      std::vector<T> getrow_at(size_t i) const;
+      std::vector<T> getrow_at(size_type i) const;
       /**
        * Get a row of the matrix as a row matrix
        * @note does not check to ensure argument is in range
        * @param i the row number
        * @return a matrix representation of that row
        */
-      matrix<T> getRowMatrix( size_t i ) const;
+      matrix<T> getRowMatrix(size_type i) const;
       /**
        * Get a row of the matrix as a row matrix
        * @throws an out of range exception for an argument out of range
        * @param i the row number
        * @return a matrix representation of that row
        */
-      matrix<T> getRowMatrix_at( size_t i ) const;
+      matrix<T> getRowMatrix_at(size_type i) const;
 
       /**
        * get a column of the matrix as a vector
@@ -211,28 +215,28 @@ class matrix {
        * @param j column number
        * @return a vector of the requested column
        */
-      std::vector<T> getcol(size_t j) const;
+      std::vector<T> getcol(size_type j) const;
       /**
        * Get a column of the matrix as a vector
        * @throws out_of_range error if the column requested is out of bounds
        * @param j the column number
        * @return a vector of the requested column
        */
-      std::vector<T> getcol_at(size_t j) const;
+      std::vector<T> getcol_at(size_type j) const;
       /**
        * Get a column of the matrix as a column matrix
        * @note does not check if the requested column is in bounds
        * @param j the column number
        * @return a column matrix of the requested column
        */
-      matrix<T> getColumnMatrix( size_t j ) const;
+      matrix<T> getColumnMatrix(size_type j) const;
       /**
        * Get a column of the matrix as a column matrix
        * @throws if the requested column is out of range
        * @param j the column number
        * @return a column matrix of the requested column
        */
-      matrix<T> getColumnMatrix_at( size_t j ) const;
+      matrix<T> getColumnMatrix_at(size_type j) const;
       
       /**
        * fill the matrix with a value
@@ -268,7 +272,7 @@ class matrix {
 };
 
 template<class T>
-matrix<T>::matrix( size_t rows, size_t cols)
+matrix<T>::matrix(size_type rows, size_type cols)
   : rows(rows), cols(cols)
 {
    if ( rows == 0 || cols == 0 )
@@ -279,7 +283,7 @@ matrix<T>::matrix( size_t rows, size_t cols)
 }
 
 template<class T>
-matrix<T>::matrix( size_t rows, size_t cols, const T* elementArray)
+matrix<T>::matrix(size_type rows, size_type cols, const T* elementArray)
   : rows(rows), cols(cols)
 {
     if ( rows == 0 || cols == 0 )
@@ -296,7 +300,7 @@ matrix<T>::matrix( size_t rows, size_t cols, const T* elementArray)
 }
 
 template<class T>
-matrix<T>::matrix( size_t rows, size_t cols, std::vector<T> elementVector)
+matrix<T>::matrix(size_type rows, size_type cols, std::vector<T> elementVector)
   : rows(rows), cols(cols)
 {
     if ( rows == 0 || cols == 0 )
@@ -311,7 +315,7 @@ matrix<T>::matrix( size_t rows, size_t cols, std::vector<T> elementVector)
 }
 
 template<class T>
-matrix<T>::matrix( const matrix<T>& cp )
+matrix<T>::matrix(const matrix<T> & cp)
   : rows(cp.rows), cols(cp.cols), elements(cp.elements)
 {
 }
@@ -330,7 +334,7 @@ matrix<T>& matrix<T>::operator=( const matrix<T>& cp )
        cols = cp.cols;
        elements.resize(rows*cols);
    }
-   for (size_t i = 0; i < rows*cols; i++)
+   for (size_type i = 0; i < rows*cols; i++)
    {
       elements[i] = cp.elements[i];
    }
@@ -344,7 +348,7 @@ bool matrix<T>::operator==(const matrix<T>& cp) const
     {
         return false;
     }
-    for (size_t i = 0; i < rows*cols; i++)
+    for (size_type i = 0; i < rows*cols; i++)
     {
         if (elements[i] != cp.elements[i])
         {
@@ -355,10 +359,10 @@ bool matrix<T>::operator==(const matrix<T>& cp) const
 }
 
 template<class T>
-std::vector<T> matrix<T>::getrow(size_t i) const
+std::vector<T> matrix<T>::getrow(size_type i) const
 {
     std::vector<T> a = std::vector<T>(cols);
-    for (size_t j = 0; j < cols; j++)
+    for (size_type j = 0; j < cols; j++)
     {
         a[j] = elements[i*cols + j];
     }
@@ -366,7 +370,7 @@ std::vector<T> matrix<T>::getrow(size_t i) const
 }
 
 template<class T>
-std::vector<T> matrix<T>::getrow_at(size_t i) const
+std::vector<T> matrix<T>::getrow_at(size_type i) const
 {
     if (i >= rows)
     {
@@ -378,13 +382,13 @@ std::vector<T> matrix<T>::getrow_at(size_t i) const
 }
 
 template<class T>
-matrix<T> matrix<T>::getRowMatrix( size_t i ) const
+matrix<T> matrix<T>::getRowMatrix(size_type i) const
 {
     // the simple method has an extra loop of assignment
     //std::vector<T> a = this->getrow(i);
     //return matrix<T>(1,cols,a);
     matrix<T> a(1,cols);
-    for (size_t j = 0; j < cols; j++)
+    for (size_type j = 0; j < cols; j++)
     {
         a(0,j) = elements[i*cols + j];
     }
@@ -392,7 +396,7 @@ matrix<T> matrix<T>::getRowMatrix( size_t i ) const
 }
 
 template<class T>
-matrix<T> matrix<T>::getRowMatrix_at(size_t i) const
+matrix<T> matrix<T>::getRowMatrix_at(size_type i) const
 {
     if (i >= rows)
     {
@@ -404,10 +408,10 @@ matrix<T> matrix<T>::getRowMatrix_at(size_t i) const
 }
 
 template<class T>
-std::vector<T> matrix<T>::getcol(size_t j) const
+std::vector<T> matrix<T>::getcol(size_type j) const
 {
     std::vector<T> a = std::vector<T>(rows);
-    for (size_t i = 0; i < rows; i++)
+    for (size_type i = 0; i < rows; i++)
     {
         a[i] = elements[i*cols + j];
     }
@@ -415,7 +419,7 @@ std::vector<T> matrix<T>::getcol(size_t j) const
 }
 
 template<class T>
-std::vector<T> matrix<T>::getcol_at(size_t j) const
+std::vector<T> matrix<T>::getcol_at(size_type j) const
 {
     if (j >= cols)
     {
@@ -427,10 +431,10 @@ std::vector<T> matrix<T>::getcol_at(size_t j) const
 }
 
 template<class T>
-matrix<T> matrix<T>::getColumnMatrix( size_t j ) const
+matrix<T> matrix<T>::getColumnMatrix(size_type j) const
 {
     matrix<T> a(rows,1);
-    for (size_t i = 0; i < rows; i++)
+    for (size_type i = 0; i < rows; i++)
     {
         a(i,0) = elements[i*cols + j];
     }
@@ -438,7 +442,7 @@ matrix<T> matrix<T>::getColumnMatrix( size_t j ) const
 }
 
 template<class T>
-matrix<T> matrix<T>::getColumnMatrix_at(size_t j) const
+matrix<T> matrix<T>::getColumnMatrix_at(size_type j) const
 {
     if (j >= cols)
     {
