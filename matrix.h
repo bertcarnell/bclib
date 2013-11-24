@@ -26,7 +26,7 @@
 #include <string>
 #include <sstream>
 
-namespace oacpp {
+namespace bclib {
 
 /**
  * Matrix Class
