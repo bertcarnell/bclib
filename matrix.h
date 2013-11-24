@@ -26,6 +26,9 @@
 #include <string>
 #include <sstream>
 
+/**
+ * @namespace The bertcarnell template library namespace
+ */
 namespace bclib {
 
 /**
