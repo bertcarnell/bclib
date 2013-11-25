@@ -36,16 +36,18 @@ namespace bclib {
  * @tparam a generic type of the kind that can be used in std::vector
  */
 template<class T>
-class matrix {
+class matrix 
+{
+   public:
+      /**
+       * Define the size_type the same as it is defined for std::vector
+       */
+      typedef typename std::vector<T>::size_type size_type;
    private:
       size_type rows;  /**< number of rows */
       size_type cols;  /**< number of columns */
       std::vector<T> elements; /**< array of elements */
    public:
-       /**
-        * Define the size_type the same as it is defined for std::vector
-        */
-       typedef std::vector<T>::size_type size_type;
        /**
         * row size
         * @return the number of rows in the matrix
