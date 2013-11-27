@@ -36,9 +36,15 @@ namespace bclib
     {
         // create a vector of pairs to hold the value and the integer rank
         std::vector<std::pair<T, int> > p(v.size());
-        for (std::vector<T>::size_type i = 0; i < v.size(); i++)
+        
+        std::vector<T>::iterator vi;
+        std::vector<std::pair<T, int> >::iterator pi;
+        int position = 0;
+        for (vi = v.begin(), pi = v.begin();
+                vi != v.end(), pi != p.end(); ++vi, ++pi)
         {
-            p[i] = std::pair<T, int>(v[i], static_cast<int>(i));
+            *pi = std::pair<T, int>(*vi, position);
+            position++;
         }
 
         // if the rank vector is not the right size, resize it (the original values may be lost)
@@ -51,9 +57,12 @@ namespace bclib
         std::sort(p.begin(), p.end(), findranksCompare<double>);
 
         // take the ranks from the pairs and put them in the rank vector
-        for (std::vector<int>::size_type i = 0; i < v.size(); i++)
+        std::vector<int>::iterator oi;
+        for (oi = order.begin(), pi = p.begin; 
+                oi != order.end(), pi != p.end(); ++oi, ++pi)
         {
-            order[i] = p[i].second;
+            *oi = pi->second;
+            //order[i] = p[i].second;
         }
     }
     
@@ -66,7 +75,7 @@ namespace bclib
             order[i] += 1;
         }
     }
-}
+} // end namespace
 
 #endif	/* ORDER_H */
 
