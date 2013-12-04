@@ -137,6 +137,10 @@ class matrix
       {
           return elements.data();
       }
+      std::vector<T> getDataVector() const
+      {
+          return elements;
+      }
       /**
        * Default Constructor with zero rows and zero columns
        */
@@ -160,7 +164,7 @@ class matrix
        * @param cols the number of columns in the matrix
        * @param elementVector a std::vector to use as the initial values
        */
-      matrix(size_type rows, size_type cols, std::vector<T> elementVector);
+      matrix(size_type rows, size_type cols, std::vector<T> & elementVector);
       /**
        * Copy Constructor
        * @param the matrix to be copied
@@ -305,7 +309,7 @@ matrix<T>::matrix(size_type rows, size_type cols, const T* elementArray)
 }
 
 template<class T>
-matrix<T>::matrix(size_type rows, size_type cols, std::vector<T> elementVector)
+matrix<T>::matrix(size_type rows, size_type cols, std::vector<T> & elementVector)
   : rows(rows), cols(cols)
 {
     if ( rows == 0 || cols == 0 )
