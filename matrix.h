@@ -47,6 +47,15 @@ class matrix
       size_type rows;  /**< number of rows */
       size_type cols;  /**< number of columns */
       std::vector<T> elements; /**< array of elements */
+      bool bTranspose; /**< is the matrix transposed from creation */
+      size_type calcLocation(const size_type row, const size_type col)
+      {
+          return (!bTranspose) ? (row*cols + col) : (col*rows + row);
+      }
+      size_type calcLocation(const size_type row, const size_type col) const
+      {
+          return (!bTranspose) ? (row*cols + col) : (col*rows + row);
+      }
    public:
        /**
         * row size
@@ -68,46 +77,46 @@ class matrix
       /**
        * matrix element access
        * @note does not check for index in range
-       * @param i row index (zero based)
-       * @param j column index (zero based)
+       * @param row row index (zero based)
+       * @param col column index (zero based)
        * @return a reference to the requested element
        */
-      T& operator()(size_type i, size_type j) 
+      T& operator()(size_type row, size_type col) 
       {
-          return elements[i*cols+j];
+          return elements[calcLocation(row, col)];
       }
       /**
        * matrix element access
        * @note does not check for arguments out of range
-       * @param i row index (zero based)
-       * @param j column index (zero based)
+       * @param row row index (zero based)
+       * @param col column index (zero based)
        * @return a const reference to the requested element
        */
-      const T& operator()(size_type i, size_type j) const 
+      const T& operator()(size_type row, size_type col) const 
       {
-         return elements[i*cols+j];
+         return elements[calcLocation(row, col)];
       }
       /**
        * matrix element access
        * @throws std::out_of_range from the internal std::vector
-       * @param i row index (zero based)
-       * @param j column index (zero based)
+       * @param row row index (zero based)
+       * @param col column index (zero based)
        * @return a const reference to the requested element
        */
-      const T& at(size_type i, size_type j) const 
+      const T& at(size_type row, size_type col) const 
       {
-         return elements.at(i*cols+j);
+         return elements.at(calcLocation(row, col));
       }
       /**
        * matrix element access
        * @throws std::out_of_range from the internal std::vector
-       * @param i row index (zero based)
-       * @param j column index (zero based)
+       * @param row row index (zero based)
+       * @param col column index (zero based)
        * @return a reference to the requested element
        */
-      T& at(size_type i, size_type j) 
+      T& at(size_type row, size_type col) 
       {
-         return elements.at(i*cols+j);
+         return elements.at(calcLocation(row,col));
       }
       /**
        * matrix element access
@@ -137,6 +146,10 @@ class matrix
       {
           return elements.data();
       }
+      /**
+       * Get the data vector
+       * @return 
+       */
       std::vector<T> getDataVector() const
       {
           return elements;
@@ -192,60 +205,60 @@ class matrix
       /**
        * Get a row of the matrix as a std::vector
        * @note does not check to ensure the row is in range
-       * @param i the row number
+       * @param row the row number
        * @return a vector representation of that row
        */
-      std::vector<T> getrow(size_type i) const;
+      std::vector<T> getrow(size_type row) const;
       /**
        * Get a row of the matrix as a std::vector
        * @throws std::out_of_range when the row is not in range
-       * @param i the row number
+       * @param row the row number
        * @return a vector representation of that row
        */
-      std::vector<T> getrow_at(size_type i) const;
+      std::vector<T> getrow_at(size_type row) const;
       /**
        * Get a row of the matrix as a row matrix
        * @note does not check to ensure argument is in range
-       * @param i the row number
+       * @param row the row number
        * @return a matrix representation of that row
        */
-      matrix<T> getRowMatrix(size_type i) const;
+      matrix<T> getRowMatrix(size_type row) const;
       /**
        * Get a row of the matrix as a row matrix
        * @throws an out of range exception for an argument out of range
-       * @param i the row number
+       * @param row the row number
        * @return a matrix representation of that row
        */
-      matrix<T> getRowMatrix_at(size_type i) const;
+      matrix<T> getRowMatrix_at(size_type row) const;
 
       /**
        * get a column of the matrix as a vector
        * @note does not check the array bounds
-       * @param j column number
+       * @param col column number
        * @return a vector of the requested column
        */
-      std::vector<T> getcol(size_type j) const;
+      std::vector<T> getcol(size_type col) const;
       /**
        * Get a column of the matrix as a vector
        * @throws out_of_range error if the column requested is out of bounds
-       * @param j the column number
+       * @param col the column number
        * @return a vector of the requested column
        */
-      std::vector<T> getcol_at(size_type j) const;
+      std::vector<T> getcol_at(size_type col) const;
       /**
        * Get a column of the matrix as a column matrix
        * @note does not check if the requested column is in bounds
-       * @param j the column number
+       * @param col the column number
        * @return a column matrix of the requested column
        */
-      matrix<T> getColumnMatrix(size_type j) const;
+      matrix<T> getColumnMatrix(size_type col) const;
       /**
        * Get a column of the matrix as a column matrix
        * @throws if the requested column is out of range
-       * @param j the column number
+       * @param col the column number
        * @return a column matrix of the requested column
        */
-      matrix<T> getColumnMatrix_at(size_type j) const;
+      matrix<T> getColumnMatrix_at(size_type col) const;
       
       /**
        * fill the matrix with a value
@@ -278,11 +291,22 @@ class matrix
       {
           return elements.empty();
       };
+
+      /**
+       * change the matrix to a string
+       * @return 
+       */
+      const char* toString();
+      
+      /**
+       * Transpose the matrix
+       */
+      void transpose();
 };
 
 template<class T>
 matrix<T>::matrix(size_type rows, size_type cols)
-  : rows(rows), cols(cols)
+  : rows(rows), cols(cols), bTranspose(false)
 {
    if ( rows == 0 || cols == 0 )
    {
@@ -293,7 +317,7 @@ matrix<T>::matrix(size_type rows, size_type cols)
 
 template<class T>
 matrix<T>::matrix(size_type rows, size_type cols, const T* elementArray)
-  : rows(rows), cols(cols)
+  : rows(rows), cols(cols), bTranspose(false)
 {
     if ( rows == 0 || cols == 0 )
     {
@@ -310,7 +334,7 @@ matrix<T>::matrix(size_type rows, size_type cols, const T* elementArray)
 
 template<class T>
 matrix<T>::matrix(size_type rows, size_type cols, std::vector<T> & elementVector)
-  : rows(rows), cols(cols)
+  : rows(rows), cols(cols), bTranspose(false)
 {
     if ( rows == 0 || cols == 0 )
     {
@@ -325,7 +349,7 @@ matrix<T>::matrix(size_type rows, size_type cols, std::vector<T> & elementVector
 
 template<class T>
 matrix<T>::matrix(const matrix<T> & cp)
-  : rows(cp.rows), cols(cp.cols), elements(cp.elements)
+  : rows(cp.rows), cols(cp.cols), elements(cp.elements), bTranspose(cp.bTranspose)
 {
 }
 
@@ -368,30 +392,30 @@ bool matrix<T>::operator==(const matrix<T>& cp) const
 }
 
 template<class T>
-std::vector<T> matrix<T>::getrow(size_type i) const
+std::vector<T> matrix<T>::getrow(size_type row) const
 {
     std::vector<T> a = std::vector<T>(cols);
     for (size_type j = 0; j < cols; j++)
     {
-        a[j] = elements[i*cols + j];
+        a[j] = elements[calcLocation(row, j)];
     }
     return a;
 }
 
 template<class T>
-std::vector<T> matrix<T>::getrow_at(size_type i) const
+std::vector<T> matrix<T>::getrow_at(size_type row) const
 {
-    if (i >= rows)
+    if (row >= rows)
     {
         std::ostringstream msg;
-        msg << "row " << i << " was requested, but the matrix has " << rows << " rows";
+        msg << "row " << row << " was requested, but the matrix has " << rows << " rows";
         throw std::out_of_range(msg.str().c_str());
     }
-    return getrow(i);
+    return getrow(row);
 }
 
 template<class T>
-matrix<T> matrix<T>::getRowMatrix(size_type i) const
+matrix<T> matrix<T>::getRowMatrix(size_type row) const
 {
     // the simple method has an extra loop of assignment
     //std::vector<T> a = this->getrow(i);
@@ -399,67 +423,67 @@ matrix<T> matrix<T>::getRowMatrix(size_type i) const
     matrix<T> a(1,cols);
     for (size_type j = 0; j < cols; j++)
     {
-        a(0,j) = elements[i*cols + j];
+        a(0,j) = elements[calcLocation(row, j)];
     }
     return a;
 }
 
 template<class T>
-matrix<T> matrix<T>::getRowMatrix_at(size_type i) const
+matrix<T> matrix<T>::getRowMatrix_at(size_type row) const
 {
-    if (i >= rows)
+    if (row >= rows)
     {
         std::ostringstream msg;
-        msg << "Row " << i << " was requested, but the matrix has " << rows << " rows";
+        msg << "Row " << row << " was requested, but the matrix has " << rows << " rows";
         throw std::out_of_range(msg.str().c_str());
     }
-    return getRowMatrix(i);
+    return getRowMatrix(row);
 }
 
 template<class T>
-std::vector<T> matrix<T>::getcol(size_type j) const
+std::vector<T> matrix<T>::getcol(size_type col) const
 {
     std::vector<T> a = std::vector<T>(rows);
     for (size_type i = 0; i < rows; i++)
     {
-        a[i] = elements[i*cols + j];
+        a[i] = elements[calcLocation(i, col)];
     }
     return a;
 }
 
 template<class T>
-std::vector<T> matrix<T>::getcol_at(size_type j) const
+std::vector<T> matrix<T>::getcol_at(size_type col) const
 {
-    if (j >= cols)
+    if (col >= cols)
     {
         std::ostringstream msg;
-        msg << "Column " << j << " was requested, but the matrix has " << cols << " columns";
+        msg << "Column " << col << " was requested, but the matrix has " << cols << " columns";
         throw std::out_of_range(msg.str().c_str());
     }
-    return getcol(j);
+    return getcol(col);
 }
 
 template<class T>
-matrix<T> matrix<T>::getColumnMatrix(size_type j) const
+matrix<T> matrix<T>::getColumnMatrix(size_type col) const
 {
     matrix<T> a(rows,1);
     for (size_type i = 0; i < rows; i++)
     {
-        a(i,0) = elements[i*cols + j];
+        a(i,0) = elements[calcLocation(i, col)];
     }
     return a;
 }
 
 template<class T>
-matrix<T> matrix<T>::getColumnMatrix_at(size_type j) const
+matrix<T> matrix<T>::getColumnMatrix_at(size_type col) const
 {
-    if (j >= cols)
+    if (col >= cols)
     {
         std::ostringstream msg;
-        msg << "Column " << j << " was requested, but the matrix has " << cols << " columns";
+        msg << "Column " << col << " was requested, but the matrix has " << cols << " columns";
         throw std::out_of_range(msg.str().c_str());
     }
-    return getColumnMatrix(j);
+    return getColumnMatrix(col);
 }
 
 template<class T>
@@ -476,6 +500,35 @@ matrix<T>::matrix()
     rows = 0; 
     cols = 0; 
     elements = std::vector<T>();
+}
+
+template<class T>
+const char* matrix<T>::toString()
+{
+    std::ostringstream msg;
+    for (size_type irow = 0; irow < rows; irow++)
+    {
+        for (size_type jcol = 0; jcol < cols; jcol++)
+        {
+            msg << (*this).at(irow, jcol); 
+            if (cols > 1 && jcol < cols - 1)
+            {
+                msg << ",";
+            }
+        }
+        msg << "\n";
+    }
+    return msg.str().c_str();
+}
+
+template<class T>
+void matrix<T>::transpose()
+{
+    // decide to not move data during transpose
+    bTranspose = !bTranspose;
+    size_type oldRows = rows;
+    rows = cols;
+    cols = oldRows;
 }
 
 } // end namespace
