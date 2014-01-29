@@ -16,29 +16,53 @@
 
 namespace bclib
 {
+    /**
+     * Assert true
+     * @param test a test expected to return true
+     * @param msg a message
+     */
     inline
     void Assert(bool test, std::string msg)
 	{
 		if (!test)
+        {
 			throw std::runtime_error(msg.append("\n\n").c_str());
+        }
 	}
     
+    /**
+     * Assert true
+     * @param test a test expected to return true
+     */
     inline
     void Assert(bool test)
     {
-        Assert(test, "Error in test - unknown location");
+        Assert(test, "Error in test - no message");
     }
     
+    /**
+     * Assert equals
+     * @param expected the expected value
+     * @param actual the actual value
+     * @param msg the message
+     */
     inline
     void Assert(int expected, int actual, std::string msg)
     {
-        Assert(expected == actual, msg);
+        std::ostringstream ss;
+        ss << "Expected:" << expected << "  Actual:" << actual << "  " << msg.c_str();
+        Assert(expected == actual, ss.str());
     }
     
+    /**
+     * Assert equals
+     * @param expected the expected value
+     * @param actual the actual value
+     */
     inline
     void Assert(int expected, int actual)
     {
-        Assert(expected == actual, "Error in integer comparison, unknown location");
+        Assert(expected == actual, "Error in integer comparison - no message");
     }
     
     /**
