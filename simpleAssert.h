@@ -14,6 +14,40 @@
 #include <stdexcept>
 #include <limits>
 
+#define ASSERT_NOTHROW(exp) \
+    try \
+    { \
+        exp; \
+    } \
+    catch (std::runtime_error re) \
+    { \
+        throw std::runtime_error("Failed: an exception was thrown in assert_nothrow"); \
+    } \
+    catch (std::exception e) \
+    { \
+        throw std::runtime_error("Failed: an exception was thrown in assert_nothrow"); \
+    }
+
+bool thrown;
+#define ASSERT_THROW(exp) \
+    thrown = false; \
+    try \
+    { \
+        exp; \
+    } \
+    catch (std::runtime_error re) \
+    { \
+        thrown = true; \
+    } \
+    catch (std::exception e) \
+    { \
+        thrown = true; \
+    } \
+    if (!thrown) \
+    { \
+        throw std::runtime_error("Failed: no exception was thrown in assert_throw"); \
+    }
+
 namespace bclib
 {
     /**
@@ -62,7 +96,7 @@ namespace bclib
     inline
     void Assert(int expected, int actual)
     {
-        Assert(expected == actual, "Error in integer comparison - no message");
+        Assert(expected, actual, "Error in integer comparison - no message");
     }
     
     /**

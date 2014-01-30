@@ -177,7 +177,7 @@ class matrix
        * @param cols the number of columns in the matrix
        * @param elementVector a std::vector to use as the initial values
        */
-      matrix(size_type rows, size_type cols, std::vector<T> & elementVector);
+      matrix(size_type rows, size_type cols, const std::vector<T> & elementVector);
       /**
        * Copy Constructor
        * @param the matrix to be copied
@@ -264,7 +264,7 @@ class matrix
        * fill the matrix with a value
        * @param x the value to fill the matrix with
        */
-      void fill(T & x)
+      void fill(const T & x)
       {
           elements.assign(rows*cols, x);
       };
@@ -273,7 +273,7 @@ class matrix
        * fill the matrix with a value
        * @param x the value to fill the matrix with
        */
-      void fill(T x)
+      void fill(const T x)
       {
           elements.assign(rows*cols, x);
       };
@@ -302,6 +302,15 @@ class matrix
        * Transpose the matrix
        */
       void transpose();
+      
+      /**
+       * is this matrix operating as a transposed matrix from the original definition
+       * @return true if tranposed
+       */
+      bool isTransposed()
+      {
+          return bTranspose;
+      }
 };
 
 template<class T>
@@ -333,7 +342,7 @@ matrix<T>::matrix(size_type rows, size_type cols, const T* elementArray)
 }
 
 template<class T>
-matrix<T>::matrix(size_type rows, size_type cols, std::vector<T> & elementVector)
+matrix<T>::matrix(size_type rows, size_type cols, const std::vector<T> & elementVector)
   : rows(rows), cols(cols), bTranspose(false)
 {
     if ( rows == 0 || cols == 0 )
