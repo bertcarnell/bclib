@@ -19,37 +19,62 @@
     { \
         exp; \
     } \
-    catch (std::runtime_error re) \
-    { \
-        throw std::runtime_error("Failed: an exception was thrown in assert_nothrow"); \
-    } \
     catch (std::exception e) \
     { \
-        throw std::runtime_error("Failed: an exception was thrown in assert_nothrow"); \
+        throw bclib::assertion_error("Failed: an exception was thrown in assert_nothrow"); \
     }
 
-bool thrown;
 #define ASSERT_THROW(exp) \
-    thrown = false; \
+    try \
+    { \
+        exp; /*if error is thrown, won't make it to the assertion_error*/ \
+        /*assertion_error will not be caught by the runtime_error or logic_error*/ \
+        throw bclib::assertion_error("Failed: no exception was thrown in assert_throw"); \
+    } \
+    catch (std::runtime_error re) \
+    { \
+    } \
+    catch (std::logic_error le) \
+    { \
+    }
+
+#define ASSERT_ASSERTIONERROR(exp) \
     try \
     { \
         exp; \
+        throw std::runtime_error("Failed: no exception was thrown in assert_noassertionerror"); \
     } \
-    catch (std::runtime_error re) \
+    catch (bclib::assertion_error ae) \
     { \
-        thrown = true; \
-    } \
-    catch (std::exception e) \
-    { \
-        thrown = true; \
-    } \
-    if (!thrown) \
-    { \
-        throw std::runtime_error("Failed: no exception was thrown in assert_throw"); \
+        /* expected */ \
     }
 
 namespace bclib
 {
+    class assertion_error : public std::exception 
+    {
+    private:
+        std::string m_msg;
+
+    public:
+        /** Takes a character string describing the error.  */
+        explicit 
+        assertion_error(const std::string & arg) : m_msg(arg)
+        {
+        };
+        
+        explicit assertion_error(const char * arg) : m_msg(arg)
+        {
+        };
+
+        ~assertion_error() throw(){};
+
+        const char * what() const throw()
+        {
+            return m_msg.c_str();
+        };
+    };
+    
     /**
      * Assert true
      * @param test a test expected to return true
@@ -60,7 +85,10 @@ namespace bclib
 	{
 		if (!test)
         {
-			throw std::runtime_error(msg.append("\n\n").c_str());
+            std::string message = "Assertion Error: ";
+            message.append(msg);
+            message.append("\n\n");
+			throw assertion_error(message.c_str());
         }
 	}
     
@@ -140,16 +168,27 @@ namespace bclib
             {
                 mess << "\n" << message.c_str();
             }
-            throw std::runtime_error(mess.str().c_str());
+            throw assertion_error(mess.str().c_str());
         }
     }
 
     inline
     void AssertEqualsLRE(double expected, double actual, int lre)
     {
-        AssertEqualsLRE(expected, actual, lre, "");
+        AssertEqualsLRE(expected, actual, lre, "Error in lre comparison - no message");
     }
-
+    
+    inline
+    void Assert(double expected, double actual, double tol)
+    {
+        Assert(abs(expected-actual) < tol, "Failure:  message not provided");
+    }
+    
+    inline
+    void Assert(double expected, double actual, double tol, std::string msg)
+    {
+        Assert(abs(expected-actual) < tol, msg);
+    }
 } //  end namespace
 
 
