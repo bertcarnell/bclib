@@ -48,10 +48,22 @@ class matrix
       size_type cols;  /**< number of columns */
       std::vector<T> elements; /**< array of elements */
       bool bTranspose; /**< is the matrix transposed from creation */
+      /**
+       * calculate tne location of the value in the vector holding the matrix values
+       * @param row the row location
+       * @param col the column location
+       * @return the location fo the value in the vector holding the matrix values
+       */
       size_type calcLocation(const size_type row, const size_type col)
       {
           return (!bTranspose) ? (row*cols + col) : (col*rows + row);
       }
+      /**
+       * calculate tne location of the value in the vector holding the matrix values
+       * @param row the row location
+       * @param col the column location
+       * @return the location fo the value in the vector holding the matrix values
+       */
       size_type calcLocation(const size_type row, const size_type col) const
       {
           return (!bTranspose) ? (row*cols + col) : (col*rows + row);
