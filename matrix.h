@@ -27,13 +27,13 @@
 #include <sstream>
 
 /**
- * @namespace The bertcarnell template library namespace
+ * @namespace bclib The bertcarnell template library namespace
  */
 namespace bclib {
 
 /**
  * Matrix Class
- * @tparam a generic type of the kind that can be used in std::vector
+ * @tparam T a generic type of the kind that can be used in std::vector
  */
 template<class T>
 class matrix 

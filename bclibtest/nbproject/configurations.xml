@@ -4,7 +4,11 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>../TestClass.h</itemPath>
+      <itemPath>../matrix.h</itemPath>
       <itemPath>matrixTest.h</itemPath>
+      <itemPath>../order.h</itemPath>
+      <itemPath>../simpleAssert.h</itemPath>
       <itemPath>simpleAssertTest.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -45,6 +49,14 @@
           <warningLevel>3</warningLevel>
         </ccTool>
       </compileType>
+      <item path="../TestClass.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../order.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../simpleAssert.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="matrixTest.cpp" ex="false" tool="1" flavor2="0">
@@ -79,6 +91,14 @@
         <archiverTool>
         </archiverTool>
       </compileType>
+      <item path="../TestClass.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../order.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../simpleAssert.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="matrixTest.cpp" ex="false" tool="1" flavor2="0">

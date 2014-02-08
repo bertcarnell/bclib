@@ -25,7 +25,8 @@
 #include "..\matrix.h"
 #include "..\simpleAssert.h"
 
-namespace bclibtest {
+namespace bclibtest 
+{
 	class matrixTest : public bclib::TestClass
 	{
 		void Run();

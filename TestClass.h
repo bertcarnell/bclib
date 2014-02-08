@@ -28,13 +28,23 @@
 #include <string>
 #include "simpleAssert.h"
 
+/**
+ * Macro to start the tests  in the main.cpp of the test project
+ */
 #define START_TESTS(x) \
 	printf(x); \
 	std::vector<bclib::TestClass*> tests = std::vector<bclib::TestClass*>();
 
+/**
+ * Macro to create an individual test and instantiate it's class if it 
+ * inherits from TestClass.h
+ */
 #define CREATE_TEST(x) \
 	tests.push_back(dynamic_cast<bclib::TestClass*>(new x()))
 
+/**
+ * Macro to run all the defined tests
+ */
 #define EXECUTE_TESTS(x) \
 	bclib::TestClass::executeTests(tests);
 
@@ -58,6 +68,24 @@ namespace bclib
 {
     /**
      * A class used to derive unit test from
+     * 
+     * Used in conjunction with the macros as follows
+     * <code>
+     * #include <cstdlib>
+     * #include <vector>
+     * #include <exception>
+     * #include "TestClass.h"
+     * #include "simpleTest1.h"
+     * #include "simpleTest2.h"
+     * 
+     * int main(int argc, const char* argv[] )
+     * {
+     *  START_TESTS("Starting Simple Tests...\n")
+     *  CREATE_TEST(simpleTest1);
+     *  CREATE_TEST(simpleTest2);
+     *  EXECUTE_TESTS
+     * }
+     * </code>
      */
 	class TestClass
 	{

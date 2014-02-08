@@ -41,8 +41,8 @@ namespace bclib
     /**
      * Find the order of each vector element (zero based)
      * @tparam T numeric argument that can be ordered
-     * @param v the vector to be ranked
-     * @param indx the ranks of the elements
+     * @param v the vector to be ordered
+     * @param order the order of the elements
      */
     template <class T>
     void findorder_zero(const std::vector<T> & v, std::vector<int> & order)
@@ -79,6 +79,12 @@ namespace bclib
         }
     }
     
+    /**
+     * Find the order of each vector element (one based)
+     * @tparam T numeric argument that can be ordered
+     * @param v the vector to be ranked
+     * @param order the order of the elements
+     */
     template <class T>
     void findorder(const std::vector<T> & v, std::vector<int> & order)
     {
