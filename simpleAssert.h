@@ -191,10 +191,10 @@ namespace bclib
             testlre = -1.0 * log10(abs(actual-expected)) + log10(abs(expected));
         }
         
-        if (isinf(testlre)) // C99 only
-        {
-            return;
-        }
+        //if (std::isinf(testlre)) // C99 only
+        //{
+        //    return;
+        //}
         if (testlre >= (double) std::numeric_limits<int>::max())
         {
             return;

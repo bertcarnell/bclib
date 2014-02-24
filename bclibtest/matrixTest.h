@@ -21,6 +21,7 @@
 #ifndef MATRIXTEST_H
 #define	MATRIXTEST_H
 
+#include <algorithm>
 #include "..\TestClass.h"
 #include "..\matrix.h"
 #include "..\simpleAssert.h"
@@ -34,6 +35,7 @@ namespace bclibtest
         void testElementAccess();
         void testConstructor();
         void testGetRowCol();
+        void testIterators();
 	};
 }
 

@@ -29,6 +29,7 @@ namespace bclibtest {
 		testElementAccess();
         testConstructor();
         testGetRowCol();
+        testIterators();
 		printf("passed\n");
 	}
     
@@ -161,5 +162,149 @@ namespace bclibtest {
             bclib::Assert(exp[i+E.colsize()], row[i], "getrow_at");
         }
         ASSERT_THROW(E.getrow_at(2));
+    }
+    
+    void matrixTest::testIterators()
+    {
+        std::vector<int> expected = {1, 2, 3, 4, 5, 6};
+        bclib::matrix<int> A = bclib::matrix<int>(2, 3, expected);
+        
+        bclib::matrix<int>::iterator it = A.begin();
+        bclib::Assert(*(expected.begin()), *it);
+        bclib::Assert(expected[0], *it);
+        
+        it = A.end();
+        bclib::Assert(expected[6] != *it);
+        ASSERT_NOTHROW(++it); // iterating past the end does not throw
+        
+        it = A.begin();
+        for (int i = 0; i < expected.size(); i++)
+        {
+            bclib::Assert(expected[i], *it);
+            ++it;
+        }
+        
+        bclib::matrix<int>::rowwise_iterator rit = A.rowwisebegin();
+        bclib::Assert(*(expected.begin()), *rit);
+        bclib::Assert(expected[0], *rit);
+        
+        rit = A.rowwiseend();
+        bclib::Assert(expected[6] != *rit);
+        ASSERT_NOTHROW(++rit); // iterating past the end does not throw
+        
+        rit = A.rowwisebegin();
+        for (int i = 0; i < expected.size(); i++)
+        {
+            bclib::Assert(expected[i], *rit);
+            ++rit;
+        }
+        
+        bclib::matrix<int>::columnwise_iterator cit = A.columnwisebegin();
+        bclib::Assert(*(expected.begin()), *cit);
+        bclib::Assert(expected[0], *cit);
+        
+        cit = A.columnwiseend();
+        bclib::Assert(expected[6] != *cit);
+        ASSERT_NOTHROW(++cit); // iterating past the end does not throw
+        
+        cit = A.columnwisebegin();
+        bclib::Assert(expected[0], *cit);
+        ++cit;
+        bclib::Assert(expected[3], *cit);
+        ++cit;
+        bclib::Assert(expected[1], *cit);
+        ++cit;
+        bclib::Assert(expected[4], *cit);
+        ++cit;
+        bclib::Assert(expected[2], *cit);
+        ++cit;
+        bclib::Assert(expected[5], *cit);
+        
+        int sum = std::accumulate(A.begin(), A.end(), 0);
+        bclib::Assert(6*7/2, sum);
+        int sum2 = std::accumulate(A.rowwisebegin(), A.rowwiseend(), 0);
+        bclib::Assert(6*7/2, sum2);
+        int sum3 = std::accumulate(A.columnwisebegin(), A.columnwiseend(), 0);
+        bclib::Assert(6*7/2, sum3);
+        
+        std::vector<int> output = std::vector<int>(expected.size());
+        std::transform(A.rowwisebegin(), A.rowwiseend(), A.columnwisebegin(), output.begin(), std::plus<int>());
+        bclib::Assert(2, output[0]);
+        bclib::Assert(12, output[5]);
+        
+        bclib::matrix<int>::iterator it2 = A.end();
+        it = A.begin();
+        it2 = it;
+        bclib::Assert(it2 == A.begin());
+        bclib::Assert(it2 != A.end());
+        
+        bclib::matrix<int>::rowwise_iterator rit2 = A.rowwiseend();
+        rit = A.rowwisebegin();
+        rit2 = rit;
+        bclib::Assert(rit2 == A.rowwisebegin());
+        bclib::Assert(rit2 != A.rowwiseend());
+
+        bclib::matrix<int>::columnwise_iterator cit2 = A.columnwiseend();
+        cit = A.columnwisebegin();
+        cit2 = cit;
+        bclib::Assert(cit2 == A.columnwisebegin());
+        bclib::Assert(cit2 != A.columnwiseend());
+        
+        // check assignment for a std::vector non-const iterator
+        it = A.begin();
+        *it = 100;
+        bclib::Assert(100, *(A.begin()));
+        
+        cit = A.columnwisebegin();
+        ++cit;
+        *cit = 300;
+        bclib::Assert(300, *cit);
+        bclib::Assert(300, A.getDataVector()[3]);
+
+        rit = A.rowwisebegin();
+        ++rit;
+        ++rit;
+        *rit = 400;
+        bclib::Assert(400, *rit);
+        bclib::Assert(400, A.getDataVector()[2]);        
+
+        // verfified that this is a compiler error on assignment, but not on increment
+#ifdef NOTDEFINED
+        bclib::matrix<int>::const_iterator itc = A.begin();
+        itc++;
+        ++itc;
+        *itc = 100;
+        
+        bclib::matrix<int>::const_columnwise_iterator citc = A.columnwisebegin();
+        citc++;
+        ++citc;
+        *citc = 100;
+
+        bclib::matrix<int>::const_rowwise_iterator ritc = A.rowwisebegin();
+        ritc++;
+        ++ritc;
+        *ritc = 100;
+#endif
+        
+        it = std::find(A.begin(), A.end(), 5);
+        bclib::Assert(it != A.end());
+        bclib::Assert(5, *it);
+        cit = std::find(A.columnwisebegin(), A.columnwiseend(), 5);
+        bclib::Assert(cit != A.columnwiseend());
+        bclib::Assert(5, *cit);
+        rit = std::find(A.rowwisebegin(), A.rowwiseend(), 5);
+        bclib::Assert(rit != A.rowwiseend());
+        
+        std::vector<int> expected2 = {1, 2, 3, 4, 5, 6};
+        bclib::matrix<int> B = bclib::matrix<int>(2, 3, expected);
+        int count = 0;
+        for (bclib::matrix<int>::rowwise_iterator rowit = B.rowwisebegin(); 
+                rowit != B.rowwiseend(); ++rowit, count++)
+        {
+            *rowit = count;
+        }
+        bclib::Assert(0, B(0,0));
+        bclib::Assert(5, B(1,2));
+
     }
 } // end namespace
