@@ -87,23 +87,11 @@ private:
           return (!bTranspose) ? (row*cols + col) : (col*rows + row);
       }
    public:
-       /**
-        * row size
-        * @return the number of rows in the matrix
-        */
-       size_type rowsize() const 
-       {
-           return rows;
-       }
+       /// The number of rows in the matrix
+       size_type rowsize() const {return rows;};
        
-       /**
-        * column size
-        * @return the number of columns in the matrix
-        */
-       size_type colsize() const 
-       {
-           return cols;
-       }
+       /// The number of columns in the matrix 
+       size_type colsize() const {return cols;};
       
       /**
        * matrix element access
@@ -175,27 +163,13 @@ private:
           return elements.at(loc);
       }
       
-      /**
-       * a pointer to the internal data array
-       * @return a pointer
-       */
-      T* data()
-      {
-          return elements.data();
-      }
+      /// a pointer to the internal data array
+      T* data() {return elements.data();};
       
-      /**
-       * Get the data vector
-       * @return 
-       */
-      std::vector<T> getDataVector() const
-      {
-          return elements;
-      }
+      /// get the internal data vector
+      std::vector<T> getDataVector() const {return elements;};
       
-      /**
-       * Default Constructor with zero rows and zero columns
-       */
+      /// Default Constructor with zero rows and zero columns 
       matrix();
       
       /**
@@ -227,9 +201,7 @@ private:
        */
       matrix(const matrix<T> &);
       
-      /**
-       * Destructor
-       */
+      /// Destructor
       ~matrix();
 
       /**
@@ -335,110 +307,74 @@ private:
           elements.assign(rows*cols, x);
       };
       
-      /**
-       * clear the matrix to zero rows and columns
-       */
+      /// Clear the matrix to zero rows and columns
       void clear();
 
-      /**
-       * Check if the matrix is empty
-       * @return true if the matrix is empty
-       */
-      bool isEmpty()
-      {
-          return elements.empty();
-      };
+      /// return true if the matrix is empty
+      bool isEmpty() const {return elements.empty();};
 
-      /**
-       * change the matrix to a string
-       * @return 
-       */
+      /// return a string representation of the matrix
       const char* toString();
       
-      /**
-       * Transpose the matrix
-       */
+      /// Transpose the matrix
       void transpose();
       
-      /**
-       * is this matrix operating as a transposed matrix from the original definition
-       * @return true if transposed
-       */
-      bool isTransposed() const
-      {
-          return bTranspose;
-      }
+      /// return true if this matrix is operating as a transposed matrix from the original definition
+      bool isTransposed() const {return bTranspose;};
+      
+      /********* Matrix Iterators *********/
+      
+      /// an iterator for the beginning of the internal vector
+      iterator begin() {return elements.begin();};
+      const_iterator begin() const {return elements.begin();};
+
+      /// An iterator for one iteration past the end of the internal vector
+      iterator end() {return elements.end();};
+      const_iterator end() const {return elements.end();};
+
+      /// An iterator that operates along the matrix rows 
+      rowwise_iterator rowwisebegin() {return rowwise_iterator(*this, 0, 0);};
+      const_rowwise_iterator rowwisebegin() const {return const_rowwise_iterator(*this, 0, 0);};
       
       /**
-       * an iterator for the beginning of the internal vector
-       * @return 
+       * return a row wise iterator for the beginning of the ith row (0 based)
+       * @param irow
        */
-      iterator begin()
-      {
-          return elements.begin();
-      }
+      rowwise_iterator rowwisebegin(size_type irow) {return rowwise_iterator(*this, irow, 0);};
+      const_rowwise_iterator rowwisebegin(size_type irow) const {return const_rowwise_iterator(*this, irow, 0);};
+      
+      /// An iterator that operates along the matrix row
+      rowwise_iterator rowwiseend() {return rowwise_iterator(*this, rows, 0);};
+      const_rowwise_iterator rowwiseend() const {return const_rowwise_iterator(*this, rows, 0);};
+
+      /**
+       * return a row wise iterator for the end of the ith row (0 based)
+       * @param irow
+       */
+      rowwise_iterator rowwiseend(size_type irow) {return rowwise_iterator(*this, irow+1, 0);};
+      const_rowwise_iterator rowwiseend(size_type irow) const {return const_rowwise_iterator(*this, irow+1, 0);};
+      
+      /// An iterator that operates along the matrix columns
+      columnwise_iterator columnwisebegin() {return columnwise_iterator(*this, 0, 0);};
+      const_columnwise_iterator columnwisebegin() const {return const_columnwise_iterator(*this, 0, 0);};
       
       /**
-       * an iterator for one iteration past the end of the internal vector
-       * @return 
+       * return a column wise iterator for the beginning of the jth column (0 based)
+       * @param irow
        */
-      iterator end()
-      {
-          return elements.end();
-      }
-      
+      columnwise_iterator columnwisebegin(size_type jcol) {return columnwise_iterator(*this, 0, jcol);};
+      const_columnwise_iterator columnwisebegin(size_type jcol) const {return const_columnwise_iterator(*this, 0, jcol);};
+
+      /// An iterator that operates along the matrix columns
+      columnwise_iterator columnwiseend() {return columnwise_iterator(*this, 0, cols);};
+      const_columnwise_iterator columnwiseend() const {return const_columnwise_iterator(*this, 0, cols);};
+
       /**
-       * Const version of iterator begin
-       * @return 
+       * return a column wise iterator for the end of the jth column (0 based)
+       * @param irow
        */
-      const_iterator begin() const
-      {
-          return elements.begin();
-      }
-      
-      /**
-       * Const verstion of iterator end
-       * @return 
-       */
-      const_iterator end() const
-      {
-          return elements.end();
-      }
-      
-      rowwise_iterator rowwisebegin()
-      {
-          return rowwise_iterator(*this, 0, 0);
-      }
-      rowwise_iterator rowwiseend()
-      {
-          // (rows, 0) is one past rows-1, cols-1
-          return rowwise_iterator(*this, rows, 0);
-      }
-      const_rowwise_iterator rowwisebegin() const
-      {
-          return const_rowwise_iterator(*this, 0, 0);
-      }
-      const_rowwise_iterator rowwiseend() const
-      {
-          return const_rowwise_iterator(*this, rows, 0);
-      }
-      columnwise_iterator columnwisebegin()
-      {
-          return columnwise_iterator(*this, 0, 0);
-      }
-      columnwise_iterator columnwiseend()
-      {
-          // (0, cols) is one past rows-1, cols-1
-          return columnwise_iterator(*this, 0, cols);
-      }
-      const_columnwise_iterator columnwisebegin() const
-      {
-          return const_columnwise_iterator(*this, 0, 0);
-      }
-      const_columnwise_iterator columnwiseend() const
-      {
-          return const_columnwise_iterator(*this, 0, cols);
-      }
+      columnwise_iterator columnwiseend(size_type jcol) {return columnwise_iterator(*this, 0, jcol+1);};
+      const_columnwise_iterator columnwiseend(size_type jcol) const {return const_columnwise_iterator(*this, 0, jcol+1);};
 };
 
 /******************************************************************************/
@@ -565,10 +501,7 @@ matrix<T>& matrix<T>::operator=( const matrix<T>& cp )
        cols = cp.cols;
        elements.resize(rows*cols);
    }
-   for (size_type i = 0; i < rows*cols; i++)
-   {
-      elements[i] = cp.elements[i];
-   }
+   std::copy<typename std::vector<T>::const_iterator>(cp.elements.begin(), cp.elements.end(), elements.begin());
    return *this;
 }
 

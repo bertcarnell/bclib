@@ -296,7 +296,7 @@ namespace bclibtest {
         bclib::Assert(rit != A.rowwiseend());
         
         std::vector<int> expected2 = {1, 2, 3, 4, 5, 6};
-        bclib::matrix<int> B = bclib::matrix<int>(2, 3, expected);
+        bclib::matrix<int> B = bclib::matrix<int>(2, 3, expected2);
         int count = 0;
         for (bclib::matrix<int>::rowwise_iterator rowit = B.rowwisebegin(); 
                 rowit != B.rowwiseend(); ++rowit, count++)
@@ -306,5 +306,46 @@ namespace bclibtest {
         bclib::Assert(0, B(0,0));
         bclib::Assert(5, B(1,2));
 
+        std::vector<double> Yvec = {1.1, 2.2, 3.3, 4.4, 5.5, 6.6};
+        bclib::matrix<double> Ymat = bclib::matrix<double>(2, 3, Yvec);
+        bclib::matrix<double>::const_rowwise_iterator Yit = Ymat.rowwisebegin(0);
+        for (int i = 0; i < 3; i++)
+        {
+            bclib::Assert(Yvec[i], *Yit, 1E-12);
+            ++Yit;
+        }
+        bclib::Assert(Yit == Ymat.rowwiseend(0), "iterator problem");
+        Yit = Ymat.rowwisebegin(1);
+        for (int i = 3; i < 6; i++)
+        {
+            bclib::Assert(Yvec[i], *Yit, 1E-12);
+            ++Yit;
+        }
+        bclib::Assert(Yit == Ymat.rowwiseend(1), "iterator problem");
+        
+        Ymat.transpose();
+        Yit = Ymat.rowwisebegin(0);
+        bclib::Assert(1.1, *Yit, 1E-12);
+        ++Yit;
+        bclib::Assert(4.4, *Yit, 1E-12);
+        ++Yit;
+        bclib::Assert(Yit == Ymat.rowwiseend(0));
+
+        std::vector<double> Zvec = {1.1, 2.2, 3.3, 4.4, 5.5, 6.6};
+        bclib::matrix<double> Zmat = bclib::matrix<double>(3, 2, Zvec);
+        bclib::matrix<double>::const_columnwise_iterator Zit = Zmat.columnwisebegin(0);
+        for (int i = 0; i < 6; i+=2)
+        {
+            bclib::Assert(Zvec[i], *Zit, 1E-12);
+            ++Zit;
+        }
+        bclib::Assert(Zit == Zmat.columnwiseend(0), "iterator problem");
+        Zit = Zmat.columnwisebegin(1);
+        for (int i = 1; i < 6; i+=2)
+        {
+            bclib::Assert(Zvec[i], *Zit, 1E-12);
+            ++Zit;
+        }
+        bclib::Assert(Zit == Zmat.columnwiseend(1), "iterator problem");
     }
 } // end namespace
