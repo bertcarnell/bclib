@@ -364,7 +364,7 @@ private:
        * is this matrix operating as a transposed matrix from the original definition
        * @return true if transposed
        */
-      bool isTransposed()
+      bool isTransposed() const
       {
           return bTranspose;
       }
