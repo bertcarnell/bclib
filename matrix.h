@@ -410,7 +410,7 @@ class matrixConstIter : public std::iterator<std::forward_iterator_tag, T>
 {
     friend class matrixIter<T, ISROWWISE>;
 private:
-    matrix<T> & myMatrix; /**< The object that the iterator is referencing */
+    const matrix<T> & myMatrix; /**< The object that the iterator is referencing */
     typename matrix<T>::size_type rows; /**< the row being pointed to */
     typename matrix<T>::size_type cols; /**< the column being pointed to */
 public:

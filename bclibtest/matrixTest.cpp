@@ -308,7 +308,7 @@ namespace bclibtest {
 
         std::vector<double> Yvec = {1.1, 2.2, 3.3, 4.4, 5.5, 6.6};
         bclib::matrix<double> Ymat = bclib::matrix<double>(2, 3, Yvec);
-        bclib::matrix<double>::const_rowwise_iterator Yit = Ymat.rowwisebegin(0);
+        bclib::matrix<double>::rowwise_iterator Yit = Ymat.rowwisebegin(0);
         for (int i = 0; i < 3; i++)
         {
             bclib::Assert(Yvec[i], *Yit, 1E-12);
@@ -333,7 +333,7 @@ namespace bclibtest {
 
         std::vector<double> Zvec = {1.1, 2.2, 3.3, 4.4, 5.5, 6.6};
         bclib::matrix<double> Zmat = bclib::matrix<double>(3, 2, Zvec);
-        bclib::matrix<double>::const_columnwise_iterator Zit = Zmat.columnwisebegin(0);
+        bclib::matrix<double>::columnwise_iterator Zit = Zmat.columnwisebegin(0);
         for (int i = 0; i < 6; i+=2)
         {
             bclib::Assert(Zvec[i], *Zit, 1E-12);
