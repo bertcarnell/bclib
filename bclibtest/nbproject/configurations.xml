@@ -68,7 +68,7 @@
       <item path="simpleAssertTest.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
-    <conf name="Release" type="3">
+    <conf name="Release" type="1">
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>RTools|MinGW</compilerSet>
@@ -81,6 +81,7 @@
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
+          <commandLine>-std=c++0x</commandLine>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -88,8 +89,6 @@
         <asmTool>
           <developmentMode>5</developmentMode>
         </asmTool>
-        <archiverTool>
-        </archiverTool>
       </compileType>
       <item path="../TestClass.h" ex="false" tool="3" flavor2="0">
       </item>

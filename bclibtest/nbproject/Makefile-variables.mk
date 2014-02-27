@@ -17,8 +17,8 @@ CND_PACKAGE_PATH_Debug=dist/Debug/RTools-Windows/package/bclibtest.tar
 # Release configuration
 CND_PLATFORM_Release=RTools-Windows
 CND_ARTIFACT_DIR_Release=dist/Release/RTools-Windows
-CND_ARTIFACT_NAME_Release=libbclibtest.a
-CND_ARTIFACT_PATH_Release=dist/Release/RTools-Windows/libbclibtest.a
+CND_ARTIFACT_NAME_Release=bclibtest
+CND_ARTIFACT_PATH_Release=dist/Release/RTools-Windows/bclibtest
 CND_PACKAGE_DIR_Release=dist/Release/RTools-Windows/package
 CND_PACKAGE_NAME_Release=bclibtest.tar
 CND_PACKAGE_PATH_Release=dist/Release/RTools-Windows/package/bclibtest.tar

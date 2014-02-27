@@ -379,6 +379,11 @@ private:
 
 /******************************************************************************/
 
+/**
+ * An iterator class for the <code>matrix</code> class
+ * @tparam T the type of object stored in the matrix
+ * @tparam ISROWWISE a boolean to indicate if the matrix is iterated row-wise
+ */
 template <class T, bool ISROWWISE>
 class matrixIter : public std::iterator<std::forward_iterator_tag, T>
 {
@@ -388,23 +393,40 @@ private:
     typename matrix<T>::size_type rows; /**< the row being pointed to */
     typename matrix<T>::size_type cols; /**< the column being pointed to */
 public:
+    /**
+     * Constructor
+     * @param mat the matrix being indexed
+     * @param r the row location of the iterator
+     * @param c the column location of the iterator
+     */
     matrixIter(matrix<T> & mat, typename matrix<T>::size_type r, 
             typename matrix<T>::size_type c)
         : myMatrix(mat), rows(r), cols(c) {}
+    /// Equality operator
     bool operator==(const matrixIter<T, ISROWWISE> & other) const;
+    /// Inequality operator
     bool operator!=(const matrixIter<T, ISROWWISE> & other) const
     {
         return !(*this == other);
     }
+    /// pre-increment operator
     matrixIter<T, ISROWWISE> & operator++();
+    /// post-increment operator
     matrixIter<T, ISROWWISE> operator++(int);
+    /// assignment operator
     matrixIter<T, ISROWWISE> & operator=(const matrixIter<T, ISROWWISE> & rhs);
+    /// de-reference operator
     T & operator*() 
     { 
         return myMatrix(rows, cols); 
     }
 };
 
+/**
+ * An const_iterator class for the <code>matrix</code> class
+ * @tparam T the type of object stored in the matrix
+ * @tparam ISROWWISE a boolean to indicate if the matrix is iterated row-wise
+ */
 template <class T, bool ISROWWISE>
 class matrixConstIter : public std::iterator<std::forward_iterator_tag, T>
 {
@@ -414,20 +436,36 @@ private:
     typename matrix<T>::size_type rows; /**< the row being pointed to */
     typename matrix<T>::size_type cols; /**< the column being pointed to */
 public:
+    /**
+     * Constructor
+     * @param mat the matrix being indexed
+     * @param r the row location of the iterator
+     * @param c the column location of the iterator
+     */
     matrixConstIter(const matrix<T> & mat, typename matrix<T>::size_type r, 
             typename matrix<T>::size_type c)
         : myMatrix(mat), rows(r), cols(c) {}
-    // copy constructor from non-const to const
+    /**
+     * Copy constructor from non-const to const
+     * @param mi the matrix being copied
+     */
     matrixConstIter(const matrixIter<T, ISROWWISE> & mi)
         : myMatrix(mi.myMatrix), rows(mi.rows), cols(mi.cols){}
+    /// Equality operator
     bool operator==(const matrixConstIter<T, ISROWWISE> & other) const;
+    /// Inequality operator
     bool operator!=(const matrixConstIter<T, ISROWWISE> & other) const
     {
         return !(*this == other);
     }
+    /// pre-increment operator
     matrixConstIter<T, ISROWWISE> & operator++();
+    /// post-increment operator
     matrixConstIter<T, ISROWWISE> operator++(int);
+    /// Assignment operator
+    /** @TODO:  does an assignment operator make sense for a const iterator? */
     matrixConstIter<T, ISROWWISE> & operator=(const matrixConstIter<T, ISROWWISE> & rhs);
+    /// de-reference operator
     const T & operator*() 
     { 
         return myMatrix(rows, cols); 
@@ -499,9 +537,9 @@ matrix<T>& matrix<T>::operator=( const matrix<T>& cp )
    {
        rows = cp.rows;
        cols = cp.cols;
-       elements.resize(rows*cols);
    }
-   std::copy<typename std::vector<T>::const_iterator>(cp.elements.begin(), cp.elements.end(), elements.begin());
+   elements = cp.elements;
+   bTranspose = cp.bTranspose;
    return *this;
 }
 
@@ -512,14 +550,7 @@ bool matrix<T>::operator==(const matrix<T>& cp) const
     {
         return false;
     }
-    for (size_type i = 0; i < rows*cols; i++)
-    {
-        if (elements[i] != cp.elements[i])
-        {
-            return false;
-        }
-    }
-    return true;
+    return std::equal(elements.begin(), elements.end(), cp.elements.begin());
 }
 
 template<class T>
@@ -633,6 +664,7 @@ void matrix<T>::clear()
     elements.clear();
     rows = 0;
     cols = 0;
+    bTranspose = false;
 }
 
 template<class T>
@@ -641,6 +673,7 @@ matrix<T>::matrix()
     rows = 0; 
     cols = 0; 
     elements = std::vector<T>();
+    bTranspose = false;
 }
 
 template<class T>

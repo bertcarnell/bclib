@@ -30,6 +30,7 @@ namespace bclibtest {
         testConstructor();
         testGetRowCol();
         testIterators();
+        testOperators();
 		printf("passed\n");
 	}
     
@@ -347,5 +348,16 @@ namespace bclibtest {
             ++Zit;
         }
         bclib::Assert(Zit == Zmat.columnwiseend(1), "iterator problem");
+    }
+    
+    void matrixTest::testOperators()
+    {
+        std::vector<int> A = {1,2,3,4,5,6,7,8};
+        bclib::matrix<int> B = bclib::matrix<int>(4,2,A);
+        std::vector<int> C = {9,10,11,12,13,14,15,16};
+        bclib::matrix<int> D = bclib::matrix<int>(4,2,C);
+        bclib::Assert(B != D);
+        D = B;
+        bclib::Assert(B == D);
     }
 } // end namespace
