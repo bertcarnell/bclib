@@ -1,7 +1,7 @@
 /**
- * @file main.cpp
+ * @file orderTest.h
  * @author Robert Carnell
- * @copyright Copyright (c) 2013, Robert Carnell
+ * @copyright Copyright (c) 2014, Robert Carnell
  * 
  * @license <a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License (GPL v3)</a>
  * This program is free software: you can redistribute it and/or modify
@@ -18,21 +18,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cstdlib>
-#include <cstdio>
-#include <vector>
-#include "../TestClass.h"
-#include "matrixTest.h"
-#include "simpleAssertTest.h"
-#include "orderTest.h"
+#ifndef ORDERTEST_H
+#define	ORDERTEST_H
 
-using namespace bclibtest;
+#include "..\TestClass.h"
+#include "..\order.h"
+#include "..\simpleAssert.h"
 
-int main(int argc, const char* argv[] )
-{
-    START_TESTS("Starting Simple Tests...\n");
-	CREATE_TEST(matrixTest);
-    CREATE_TEST(simpleAssertTest);
-    CREATE_TEST(orderTest);
-    EXECUTE_TESTS();
+namespace bclibtest {
+	class orderTest : public bclib::TestClass
+	{
+		void Run();
+        void testOrder();
+	};
 }
+
+#endif	/* ORDERTEST_H */
+

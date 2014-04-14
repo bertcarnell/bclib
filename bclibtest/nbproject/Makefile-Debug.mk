@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/_ext/1924011524/orderTest.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/matrixTest.o \
 	${OBJECTDIR}/simpleAssertTest.o
@@ -44,8 +45,8 @@ OBJECTFILES= \
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=-std=c++0x
-CXXFLAGS=-std=c++0x
+CCFLAGS=-m64 -std=c++0x
+CXXFLAGS=-m64 -std=c++0x
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -64,20 +65,25 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/bclibtest.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/bclibtest ${OBJECTFILES} ${LDLIBSOPTIONS}
 
+${OBJECTDIR}/_ext/1924011524/orderTest.o: /C/Users/Rob/Documents/Repositories/bclib/bclibtest/orderTest.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1924011524
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Werror -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1924011524/orderTest.o /C/Users/Rob/Documents/Repositories/bclib/bclibtest/orderTest.cpp
+
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -Werror -std=c++0x -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Werror -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 ${OBJECTDIR}/matrixTest.o: matrixTest.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -Werror -std=c++0x -MMD -MP -MF $@.d -o ${OBJECTDIR}/matrixTest.o matrixTest.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Werror -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/matrixTest.o matrixTest.cpp
 
 ${OBJECTDIR}/simpleAssertTest.o: simpleAssertTest.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -Werror -std=c++0x -MMD -MP -MF $@.d -o ${OBJECTDIR}/simpleAssertTest.o simpleAssertTest.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Werror -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/simpleAssertTest.o simpleAssertTest.cpp
 
 # Subprojects
 .build-subprojects:
