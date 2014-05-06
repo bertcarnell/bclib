@@ -31,6 +31,7 @@ namespace bclibtest {
         testGetRowCol();
         testIterators();
         testOperators();
+        testToString();
 		printf("passed\n");
 	}
     
@@ -359,5 +360,14 @@ namespace bclibtest {
         bclib::Assert(B != D);
         D = B;
         bclib::Assert(B == D);
+    }
+    
+    void matrixTest::testToString()
+    {
+        std::vector<int> A = {1,2,3,4,5,6,7,8};
+        bclib::matrix<int> B = bclib::matrix<int>(4,2,A);
+        std::string expected = "1,2\n3,4\n5,6\n7,8\n";
+        std::string result = B.toString();
+        bclib::Assert(expected == result, "to string");
     }
 } // end namespace

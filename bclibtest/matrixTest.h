@@ -37,6 +37,7 @@ namespace bclibtest
         void testGetRowCol();
         void testIterators();
         void testOperators();
+        void testToString();
 	};
 }
 
