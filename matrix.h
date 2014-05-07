@@ -302,10 +302,10 @@ private:
        * fill the matrix with a value
        * @param x the value to fill the matrix with
        */
-      void fill(const T x)
-      {
-          elements.assign(rows*cols, x);
-      };
+      //void fill(const T x)
+      //{
+      //    elements.assign(rows*cols, x);
+      //};
       
       /// Clear the matrix to zero rows and columns
       void clear();
