@@ -21,7 +21,7 @@
 #include <cstdlib>
 #include <cstdio>
 #include <vector>
-#include "../TestClass.h"
+#include "TestClass.h"
 #include "matrixTest.h"
 #include "simpleAssertTest.h"
 #include "orderTest.h"
