@@ -21,9 +21,9 @@
 #ifndef ORDERTEST_H
 #define	ORDERTEST_H
 
-#include "..\TestClass.h"
-#include "..\order.h"
-#include "..\simpleAssert.h"
+#include "TestClass.h"
+#include "order.h"
+#include "simpleAssert.h"
 
 namespace bclibtest {
 	class orderTest : public bclib::TestClass

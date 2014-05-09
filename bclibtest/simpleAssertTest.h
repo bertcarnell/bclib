@@ -21,8 +21,8 @@
 #ifndef SIMPLEASSERTTEST_H
 #define	SIMPLEASSERTTEST_H
 
-#include "..\TestClass.h"
-#include "..\simpleAssert.h"
+#include "TestClass.h"
+#include "simpleAssert.h"
 
 namespace bclibtest {
 	class simpleAssertTest : public bclib::TestClass

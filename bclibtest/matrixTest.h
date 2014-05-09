@@ -22,9 +22,9 @@
 #define	MATRIXTEST_H
 
 #include <algorithm>
-#include "..\TestClass.h"
-#include "..\matrix.h"
-#include "..\simpleAssert.h"
+#include "TestClass.h"
+#include "matrix.h"
+#include "simpleAssert.h"
 
 namespace bclibtest 
 {
