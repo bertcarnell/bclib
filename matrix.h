@@ -25,6 +25,7 @@
 #include <stdexcept>
 #include <string>
 #include <sstream>
+#include <cstddef>
 
 /**
  * @namespace bclib The bertcarnell template library namespace
