@@ -6,3 +6,4 @@ sudo: false
 script:
   - cmake -H. -Bbuild
   - cmake --build build
+  - ./build/bclibtest/bclibtest
