@@ -58,38 +58,38 @@ namespace bclibtest {
         // different kind of access
         std::vector<int> expected = {1, 2, 3, 4, 5, 6};
         B = bclib::matrix<int>(2, 3, expected);
-        for (int i = 0; i < B.rowsize(); i++)
+        for (bclib::matrix<int>::size_type i = 0; i < B.rowsize(); i++)
         {
-            for (int j = 0; j < B.colsize(); j++)
+            for (bclib::matrix<int>::size_type j = 0; j < B.colsize(); j++)
             {
                 bclib::Assert(expected[i*B.colsize() + j], B(i,j), "(i,j) access");
             }
         }
         std::vector<int> actual = B.getDataVector();
-        for (int i = 0; i < B.rowsize(); i++)
+        for (bclib::matrix<int>::size_type i = 0; i < B.rowsize(); i++)
         {
-            for (int j = 0; j < B.colsize(); j++)
+            for (bclib::matrix<int>::size_type j = 0; j < B.colsize(); j++)
             {
                 bclib::Assert(expected[i*B.colsize() + j], actual[i*B.colsize() + j], "std::vector[loc] access");
             }
         }
-        for (int i = 0; i < B.rowsize(); i++)
+        for (bclib::matrix<int>::size_type i = 0; i < B.rowsize(); i++)
         {
-            for (int j = 0; j < B.colsize(); j++)
+            for (bclib::matrix<int>::size_type j = 0; j < B.colsize(); j++)
             {
                 bclib::Assert(expected[i*B.colsize() + j], B.at(i, j), ".at(i,j) access");
             }
         }
-        for (int i = 0; i < B.rowsize(); i++)
+        for (bclib::matrix<int>::size_type i = 0; i < B.rowsize(); i++)
         {
-            for (int j = 0; j < B.colsize(); j++)
+            for (bclib::matrix<int>::size_type j = 0; j < B.colsize(); j++)
             {
                 bclib::Assert(expected[i*B.colsize() + j], B.at(i*B.colsize() + j), ".at(loc) access");
             }
         }
-        for (int i = 0; i < B.rowsize(); i++)
+        for (bclib::matrix<int>::size_type i = 0; i < B.rowsize(); i++)
         {
-            for (int j = 0; j < B.colsize(); j++)
+            for (bclib::matrix<int>::size_type j = 0; j < B.colsize(); j++)
             {
                 bclib::Assert(expected[i*B.colsize() + j], B.data()[i*B.colsize() + j], ".data() access");
             }
@@ -144,22 +144,22 @@ namespace bclibtest {
         int exp[8] = {1,2,3,4,5,6,7,8};
         bclib::matrix<int> E = bclib::matrix<int>(2, 4, exp);
         std::vector<int> row = E.getrow(0);
-        for (int i = 0; i < E.colsize(); i++)
+        for (bclib::matrix<int>::size_type i = 0; i < E.colsize(); i++)
         {
             bclib::Assert(exp[i], row[i], "getrow");
         }
         row = E.getrow(1);
-        for (int i = 0; i < E.colsize(); i++)
+        for (bclib::matrix<int>::size_type i = 0; i < E.colsize(); i++)
         {
             bclib::Assert(exp[i+E.colsize()], row[i], "getrow");
         }
         row = E.getrow_at(0);
-        for (int i = 0; i < E.colsize(); i++)
+        for (bclib::matrix<int>::size_type i = 0; i < E.colsize(); i++)
         {
             bclib::Assert(exp[i], row[i], "getrow_at");
         }
         row = E.getrow_at(1);
-        for (int i = 0; i < E.colsize(); i++)
+        for (bclib::matrix<int>::size_type i = 0; i < E.colsize(); i++)
         {
             bclib::Assert(exp[i+E.colsize()], row[i], "getrow_at");
         }
@@ -180,7 +180,7 @@ namespace bclibtest {
         ASSERT_NOTHROW(++it); // iterating past the end does not throw
         
         it = A.begin();
-        for (int i = 0; i < expected.size(); i++)
+        for (std::vector<int>::size_type i = 0; i < expected.size(); i++)
         {
             bclib::Assert(expected[i], *it);
             ++it;
@@ -195,7 +195,7 @@ namespace bclibtest {
         ASSERT_NOTHROW(++rit); // iterating past the end does not throw
         
         rit = A.rowwisebegin();
-        for (int i = 0; i < expected.size(); i++)
+        for (std::vector<int>::size_type i = 0; i < expected.size(); i++)
         {
             bclib::Assert(expected[i], *rit);
             ++rit;
