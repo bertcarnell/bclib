@@ -36,13 +36,13 @@ namespace bclibtest {
         std::vector<int> expected = {1, 3, 2, 4};
         bclib::findorder(toOrder, order);
         bclib::Assert(expected.size(), order.size(), "wrong size");
-        for (int i = 0; i < expected.size(); i++)
+        for (std::vector<int>::size_type i = 0; i < expected.size(); i++)
         {
             bclib::Assert(expected[i], order[i]);
         }
         bclib::findorder_zero(toOrder, order);
         bclib::Assert(expected.size(), order.size(), "wrong size");
-        for (int i = 0; i < expected.size(); i++)
+        for (std::vector<int>::size_type i = 0; i < expected.size(); i++)
         {
             bclib::Assert(expected[i]-1, order[i]);
         }
@@ -55,13 +55,13 @@ namespace bclibtest {
         std::vector<int> expected2 = {5,6,7,1,3,2,8,4};
         bclib::findorder(toOrder, order);
         bclib::Assert(expected2.size(), order.size(), "wrong size");
-        for (int i = 0; i < expected2.size(); i++)
+        for (std::vector<int>::size_type i = 0; i < expected2.size(); i++)
         {
             bclib::Assert(expected2[i], order[i]);
         }
         bclib::findorder_zero(toOrder, order);
         bclib::Assert(expected2.size(), order.size(), "wrong size");
-        for (int i = 0; i < expected2.size(); i++)
+        for (std::vector<int>::size_type i = 0; i < expected2.size(); i++)
         {
             bclib::Assert(expected2[i]-1, order[i]);
         }

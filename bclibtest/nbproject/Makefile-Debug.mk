@@ -68,22 +68,22 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/bclibtest.exe: ${OBJECTFILES}
 ${OBJECTDIR}/_ext/1924011524/orderTest.o: /C/Users/Rob/Documents/Repositories/bclib/bclibtest/orderTest.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1924011524
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1924011524/orderTest.o /C/Users/Rob/Documents/Repositories/bclib/bclibtest/orderTest.cpp
+	$(COMPILE.cc) -g -Werror -I../../bclib -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1924011524/orderTest.o /C/Users/Rob/Documents/Repositories/bclib/bclibtest/orderTest.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -Werror -I../../bclib -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 ${OBJECTDIR}/matrixTest.o: matrixTest.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/matrixTest.o matrixTest.cpp
+	$(COMPILE.cc) -g -Werror -I../../bclib -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/matrixTest.o matrixTest.cpp
 
 ${OBJECTDIR}/simpleAssertTest.o: simpleAssertTest.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/simpleAssertTest.o simpleAssertTest.cpp
+	$(COMPILE.cc) -g -Werror -I../../bclib -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/simpleAssertTest.o simpleAssertTest.cpp
 
 # Subprojects
 .build-subprojects:

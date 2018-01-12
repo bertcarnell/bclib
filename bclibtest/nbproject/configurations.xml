@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="90">
+<configurationDescriptor version="95">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
@@ -47,6 +47,10 @@
       <compileType>
         <ccTool>
           <architecture>2</architecture>
+          <incDir>
+            <pElem>../../bclib</pElem>
+            <pElem>.</pElem>
+          </incDir>
           <commandLine>-std=c++0x</commandLine>
           <warningLevel>3</warningLevel>
         </ccTool>
