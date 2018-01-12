@@ -34,9 +34,9 @@ namespace bclibtest {
         throw std::runtime_error("thrower error");
     }
     
-    void nothrower()
+    int nothrower()
     {
-        int five = 2 + 3;
+        return 2 + 3;
     }
     
     void simpleAssertTest::testAssert()
