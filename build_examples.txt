@@ -1,0 +1,27 @@
+#########
+# Windows
+
+rm -rf cmakebuild
+mkdir cmakebuild
+cd cmakebuild
+"c:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -G "MinGW Makefiles" -DCMAKE_CXX_COMPILER=C:/Rtools/gcc-4.6.3/bin/g++.exe -DCMAKE_BUILD_TYPE=Debug ..
+
+"C:\MinGW\bin\mingw32-make.exe"
+
+bclibtest\bclibtest.exe
+
+#######
+# Linux
+
+# instal lcov if not already installed
+# sudo apt-get install lcov
+
+mkdir build
+cd build
+cmake .. -DCMAKE_BUILD_TYPE=Coverage
+make
+./bclibtest/bclibtest
+lcov --directory bclibtest --capture --output-file bclibtest.info
+lcov --remove bclibtest.info 'bclibtest/*' '/usr/*' --output-file bclibtest.clean.info
+genhtml -o coverage bclibtest.clean.info
+
