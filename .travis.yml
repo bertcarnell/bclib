@@ -3,7 +3,23 @@ language: c++
 dist: trusty
 sudo: false
 
+addons:
+  apt:
+    packages:
+      - lcov
+
 script:
-  - cmake -H. -Bbuild
+  - cmake . -Bbuild -DCMAKE_BUILD_TYPE=Release # Test release build options
   - cmake --build build
   - ./build/bclibtest/bclibtest
+  - cmake . -Bcoveragebuild -DCMAKE_BUILD_TYPE=Coverage # Test debug build and coverage options
+  - cmake --build coveragebuild
+  - ./coveragebuild/bclibtest/bclibtest
+
+after_success:
+  - cd coveragebuild
+  - lcov --directory bclibtest --capture --output-file bclibtest.info
+  - lcov --remove bclibtest.info 'bclibtest/*' '/usr/*' --output-file bclibtest.clean.info
+  - lcov --list bclibtest.clean.info
+  - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
+
