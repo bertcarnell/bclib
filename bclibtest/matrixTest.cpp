@@ -120,6 +120,11 @@ namespace bclibtest {
         bclib::Assert(3, D.colsize());
         bclib::Assert(expected[0], D.at(0), "std::vector constructor");
         bclib::Assert(expected[5], D.at(5), "std::vector constructor");
+        ASSERT_THROW(bclib::matrix<int> DD1 = bclib::matrix<int>(0, 6, expected));
+        ASSERT_THROW(bclib::matrix<int> DD2 = bclib::matrix<int>(6, 0, expected));
+        ASSERT_THROW(bclib::matrix<int> DD3 = bclib::matrix<int>(0, 0, expected));
+        ASSERT_THROW(bclib::matrix<int> DD4 = bclib::matrix<int>(6, 6, expected));
+
 
         int exp[8] = {1,2,3,4,5,6,7,8};
         bclib::matrix<int> E = bclib::matrix<int>(4, 2, exp);
@@ -127,6 +132,9 @@ namespace bclibtest {
         bclib::Assert(2, E.colsize());
         bclib::Assert(exp[0], E.at(0), "int[] constructor");
         bclib::Assert(exp[3], E.at(3), "int[] constructor");
+        ASSERT_THROW(bclib::matrix<int> EE1 = bclib::matrix<int>(0, 8, exp));
+        ASSERT_THROW(bclib::matrix<int> EE2 = bclib::matrix<int>(8, 0, exp));
+        ASSERT_THROW(bclib::matrix<int> EE3 = bclib::matrix<int>(0, 0, exp));
 
         // copy constructor
         bclib::matrix<int> F = bclib::matrix<int>(2, 4, exp);
@@ -137,6 +145,10 @@ namespace bclibtest {
         bclib::Assert(exp[3], G.at(3), "copy constructor");
 
         bclib::Assert(F == G, "Equality comparison");
+
+        ASSERT_THROW(bclib::matrix<int> Y1 = bclib::matrix<int>(0, 3));
+        ASSERT_THROW(bclib::matrix<int> Y2 = bclib::matrix<int>(2, 0));
+        ASSERT_THROW(bclib::matrix<int> Y3 = bclib::matrix<int>(0, 0));
     }
 
     void matrixTest::testGetRowCol()
@@ -349,6 +361,8 @@ namespace bclibtest {
             ++Zit;
         }
         bclib::Assert(Zit == Zmat.columnwiseend(1), "iterator problem");
+        // test self assignment
+        ASSERT_NOTHROW(Zit = Zit);
     }
     
     void matrixTest::testOperators()
@@ -358,8 +372,17 @@ namespace bclibtest {
         std::vector<int> C = {9,10,11,12,13,14,15,16};
         bclib::matrix<int> D = bclib::matrix<int>(4,2,C);
         bclib::Assert(B != D);
+        bclib::Assert(!(B == D));
         D = B;
         bclib::Assert(B == D);
+        bclib::Assert(!(B != D));
+
+        bclib::matrix<int> E = bclib::matrix<int>(2,4,A);
+        bclib::matrix<int> F = bclib::matrix<int>(8,1,C);
+        bclib::Assert(!(E == F));
+	E = F;
+        bclib::Assert(E.colsize() == 1);
+        bclib::Assert(E.rowsize() == 8);
     }
     
     void matrixTest::testToString()

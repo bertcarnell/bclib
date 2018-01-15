@@ -93,7 +93,7 @@ namespace bclib
         /**
          * run a set of unit tests in a TestClass
          */
-		virtual void Run(){};
+		virtual void Run(){}; //LCOV_EXCL_LINE
         /**
          * method used in the main.cpp to run unit test classes
          * @param tests
