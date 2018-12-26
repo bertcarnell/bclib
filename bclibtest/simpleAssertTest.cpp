@@ -51,11 +51,11 @@ namespace bclibtest {
         ASSERT_ASSERTIONERROR(bclib::Assert(0, 1, "test6"));
         bclib::AssertEqualsLRE(1.0, 1.0000000001, 6, "test7");
         bclib::AssertEqualsLRE(1.0, 1.0, 6, "test8");
-        bclib::AssertEqualsLRE(1.01, 1.012, 1, "test9");
-        bclib::AssertEqualsLRE(1.1, 1.01, 6, "test10");
+        bclib::AssertEqualsLRE(1.010, 1.012, 1, "test9");
+        bclib::AssertEqualsLRE(1.100, 1.101, 2, "test10");
         bclib::AssertEqualsLRE(0.0, 10.0, -6, "test11");
-        ASSERT_THROW(bclib::AssertEqualsLRE(0.0, 10.0, 6, "test12"));
-        ASSERT_THROW(bclib::AssertEqualsLRE(0.0, 10.0, 6, ""));
+		ASSERT_ASSERTIONERROR(bclib::AssertEqualsLRE(0.0, 10.0, 6, "test12"));
+		ASSERT_ASSERTIONERROR(bclib::AssertEqualsLRE(0.0, 10.0, 6, "test13"));
     }
 }
 

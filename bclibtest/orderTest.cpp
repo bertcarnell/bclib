@@ -69,8 +69,8 @@ namespace bclibtest {
         std::pair<double, int> a = std::pair<double, int>(4.1, 1);
         std::pair<double, int> b = std::pair<double, int>(0.0, 2);
         
-        bclib::Assert(bclib::findranksCompare<double>(a, b));
-        bclib::Assert(!bclib::findranksCompare<double>(b, a));
+        bclib::Assert(!bclib::findranksCompare<double>(a, b));
+        bclib::Assert(bclib::findranksCompare<double>(b, a));
         
         b = std::pair<double, int>(4.1, 1);
         bclib::Assert(!bclib::findranksCompare<double>(a, b));
