@@ -22,6 +22,7 @@
 #define	MATRIXTEST_H
 
 #include <algorithm>
+#include <numeric>
 #include "TestClass.h"
 #include "matrix.h"
 #include "simpleAssert.h"

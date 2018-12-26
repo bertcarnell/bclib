@@ -38,8 +38,8 @@ namespace bclibtest {
     void matrixTest::testGetRowColSize()
     {
         bclib::matrix<int> A = bclib::matrix<int>(3,9);
-        bclib::Assert(3, A.rowsize());
-        bclib::Assert(9, A.colsize());
+        bclib::Assert(3, static_cast<int>(A.rowsize()));
+        bclib::Assert(9, static_cast<int>(A.colsize()));
     }
 
     void matrixTest::testElementAccess()
@@ -99,16 +99,16 @@ namespace bclibtest {
     void matrixTest::testConstructor()
     {
         bclib::matrix<int> B = bclib::matrix<int>();
-        bclib::Assert(0, B.rowsize());
-        bclib::Assert(0, B.colsize());
+        bclib::Assert(0, static_cast<int>(B.rowsize()));
+        bclib::Assert(0, static_cast<int>(B.colsize()));
         for (std::vector<int>::iterator i = B.getDataVector().begin(); i != B.getDataVector().end(); i++)
         {
             bclib::Assert(0, *i, "null constructor");
         }
 
         bclib::matrix<int> A = bclib::matrix<int>(3,9);
-        bclib::Assert(3, A.rowsize());
-        bclib::Assert(9, A.colsize());
+        bclib::Assert(3, static_cast<int>(A.rowsize()));
+        bclib::Assert(9, static_cast<int>(A.colsize()));
         for (int i = 0; i < 3*9; i++)
         {
             bclib::Assert(0, A.at(i), "size constructor");
@@ -116,8 +116,8 @@ namespace bclibtest {
 
         std::vector<int> expected = {1, 2, 3, 4, 5, 6};
         bclib::matrix<int> D = bclib::matrix<int>(2,3,expected);
-        bclib::Assert(2, D.rowsize());
-        bclib::Assert(3, D.colsize());
+        bclib::Assert(2, static_cast<int>(D.rowsize()));
+        bclib::Assert(3, static_cast<int>(D.colsize()));
         bclib::Assert(expected[0], D.at(0), "std::vector constructor");
         bclib::Assert(expected[5], D.at(5), "std::vector constructor");
         ASSERT_THROW(bclib::matrix<int> DD1 = bclib::matrix<int>(0, 6, expected));
@@ -128,8 +128,8 @@ namespace bclibtest {
 
         int exp[8] = {1,2,3,4,5,6,7,8};
         bclib::matrix<int> E = bclib::matrix<int>(4, 2, exp);
-        bclib::Assert(4, E.rowsize());
-        bclib::Assert(2, E.colsize());
+        bclib::Assert(4, static_cast<int>(E.rowsize()));
+        bclib::Assert(2, static_cast<int>(E.colsize()));
         bclib::Assert(exp[0], E.at(0), "int[] constructor");
         bclib::Assert(exp[3], E.at(3), "int[] constructor");
         ASSERT_THROW(bclib::matrix<int> EE1 = bclib::matrix<int>(0, 8, exp));
@@ -139,8 +139,8 @@ namespace bclibtest {
         // copy constructor
         bclib::matrix<int> F = bclib::matrix<int>(2, 4, exp);
         bclib::matrix<int> G = F;
-        bclib::Assert(2, G.rowsize());
-        bclib::Assert(4, G.colsize());
+        bclib::Assert(2, static_cast<int>(G.rowsize()));
+        bclib::Assert(4, static_cast<int>(G.colsize()));
         bclib::Assert(exp[0], G.at(0), "copy constructor");
         bclib::Assert(exp[3], G.at(3), "copy constructor");
 

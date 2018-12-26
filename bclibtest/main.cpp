@@ -34,5 +34,5 @@ int main(int argc, const char* argv[] )
 	CREATE_TEST(matrixTest);
     CREATE_TEST(simpleAssertTest);
     CREATE_TEST(orderTest);
-    EXECUTE_TESTS();
+    EXECUTE_TESTS(NULL);
 }

@@ -35,13 +35,13 @@ namespace bclibtest {
         std::vector<double> toOrder = {1.0, 3.0, 2.0, 4.0};
         std::vector<int> expected = {1, 3, 2, 4};
         bclib::findorder(toOrder, order);
-        bclib::Assert(expected.size(), order.size(), "wrong size");
+        bclib::Assert(static_cast<int>(expected.size()), static_cast<int>(order.size()), "wrong size");
         for (std::vector<int>::size_type i = 0; i < expected.size(); i++)
         {
             bclib::Assert(expected[i], order[i]);
         }
         bclib::findorder_zero(toOrder, order);
-        bclib::Assert(expected.size(), order.size(), "wrong size");
+        bclib::Assert(static_cast<int>(expected.size()), static_cast<int>(order.size()), "wrong size");
         for (std::vector<int>::size_type i = 0; i < expected.size(); i++)
         {
             bclib::Assert(expected[i]-1, order[i]);
@@ -54,25 +54,25 @@ namespace bclibtest {
         
         std::vector<int> expected2 = {5,6,7,1,3,2,8,4};
         bclib::findorder(toOrder, order);
-        bclib::Assert(expected2.size(), order.size(), "wrong size");
+        bclib::Assert(static_cast<int>(expected2.size()), static_cast<int>(order.size()), "wrong size");
         for (std::vector<int>::size_type i = 0; i < expected2.size(); i++)
         {
             bclib::Assert(expected2[i], order[i]);
         }
         bclib::findorder_zero(toOrder, order);
-        bclib::Assert(expected2.size(), order.size(), "wrong size");
+        bclib::Assert(static_cast<int>(expected2.size()), static_cast<int>(order.size()), "wrong size");
         for (std::vector<int>::size_type i = 0; i < expected2.size(); i++)
         {
             bclib::Assert(expected2[i]-1, order[i]);
         }
         
-        std::pair<int, double> a = std::pair<int, double>(1, 4.1);
-        std::pair<int, double> b = std::pair<int, double>(2, 0);
+        std::pair<double, int> a = std::pair<double, int>(4.1, 1);
+        std::pair<double, int> b = std::pair<double, int>(0.0, 2);
         
         bclib::Assert(bclib::findranksCompare<double>(a, b));
         bclib::Assert(!bclib::findranksCompare<double>(b, a));
         
-        b = std::pair<int, double>(1, 4.1);
+        b = std::pair<double, int>(4.1, 1);
         bclib::Assert(!bclib::findranksCompare<double>(a, b));
     }
 }
