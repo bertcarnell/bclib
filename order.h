@@ -54,7 +54,7 @@ namespace bclib
         typename std::vector<std::pair<T, int> >::iterator pi;
         int position = 0;
         for (vi = v.begin(), pi = p.begin();
-                vi != v.end(), pi != p.end(); ++vi, ++pi)
+                vi != v.end() && pi != p.end(); ++vi, ++pi)
         {
             *pi = std::pair<T, int>(*vi, position);
             position++;
@@ -72,7 +72,7 @@ namespace bclib
         // take the ranks from the pairs and put them in the rank vector
         std::vector<int>::iterator oi;
         for (oi = order.begin(), pi = p.begin(); 
-                oi != order.end(), pi != p.end(); ++oi, ++pi)
+                oi != order.end() && pi != p.end(); ++oi, ++pi)
         {
             *oi = pi->second;
             //order[i] = p[i].second;
