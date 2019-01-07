@@ -20,7 +20,7 @@ before_build:
   - cmake.exe .. -G "Visual Studio 15 2017 Win64"
   
 build:
-  project: c:\projects\bclib\src\build\BCLIB.sln
+  project: c:\projects\bclib\build\BCLIB.sln
 
 test_script:
   - cd %APPVEYOR_BUILD_FOLDER%\build
