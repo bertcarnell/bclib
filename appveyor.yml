@@ -28,6 +28,6 @@ test_script:
   - type bclibtest_output.log
   
 artifacts:
-  - path: 'src\**\*_output.log'
+  - path: 'build\**\*_output.log'
     name: TestOuptut
     
