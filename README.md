@@ -3,9 +3,9 @@ bclib
 
 BertCarnell Template Library (bclib) for C++ utility headers
 
-[![Build Status](https://travis-ci.org/bertcarnell/bclib.svg?branch=master)](https://travis-ci.org/bertcarnell/bclib)
-[![codecov](https://codecov.io/gh/bertcarnell/bclib/branch/master/graph/badge.svg)](https://codecov.io/gh/bertcarnell/bclib)
-[![Build status](https://ci.appveyor.com/api/projects/status/ew4nolsitxr5sl5r?svg=true)](https://ci.appveyor.com/project/bertcarnell/bclib)
+|<sub>Linux & MacOS</sub>|<sub>Windows</sub>|<sub>Code Coverage</sub>|
+|:---:|:---:|:---:|
+|[![Build Status](https://travis-ci.org/bertcarnell/bclib.svg?branch=master)](https://travis-ci.org/bertcarnell/bclib)|[![Build status](https://ci.appveyor.com/api/projects/status/ew4nolsitxr5sl5r?svg=true)](https://ci.appveyor.com/project/bertcarnell/bclib)|[![codecov](https://codecov.io/gh/bertcarnell/bclib/branch/master/graph/badge.svg)](https://codecov.io/gh/bertcarnell/bclib)|
 
 ## Developing using CMake on Windows and Linux
 
