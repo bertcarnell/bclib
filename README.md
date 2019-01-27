@@ -1,11 +1,17 @@
 bclib
 =====
 
-BertCarnell Template Library (bclib) for C++ utility headers
+bertcarnell Template Library (bclib) for C++ utility headers
 
 |<sub>Linux & MacOS</sub>|<sub>Windows</sub>|<sub>Code Coverage</sub>|
 |:---:|:---:|:---:|
 |[![Build Status](https://travis-ci.org/bertcarnell/bclib.svg?branch=master)](https://travis-ci.org/bertcarnell/bclib)|[![Build status](https://ci.appveyor.com/api/projects/status/ew4nolsitxr5sl5r?svg=true)](https://ci.appveyor.com/project/bertcarnell/bclib)|[![codecov](https://codecov.io/gh/bertcarnell/bclib/branch/master/graph/badge.svg)](https://codecov.io/gh/bertcarnell/bclib)|
+
+## Used in packages...
+
+- [oa](https://github.com/bertcarnell/oa)
+- [lhslib](https://github.com/bertcarnell/lhslib)
+- [lhs](https://github.com/bertcarnell/lhs)
 
 ## Developing using CMake on Windows and Linux
 
@@ -22,11 +28,10 @@ sudo apt-get install cmake lcov
 #### CMake
 
 ```
-mkdir build
+cmake . -Bbuild -DCMAKE_BUILD_TYPE=Coverage
+cmake --build build
+./build/bclibtest/bclibtest
 cd build
-cmake .. -DCMAKE_BUILD_TYPE=Coverage
-make
-./bclibtest/bclibtest
 lcov --directory bclibtest --capture --output-file bclibtest.info
 lcov --remove bclibtest.info 'bclibtest/*' '/usr/*' --output-file bclibtest.clean.info
 genhtml -o coverage bclibtest.clean.info
@@ -41,35 +46,22 @@ genhtml -o coverage bclibtest.clean.info
 
 #### CMake
 
-Open a Windows PowerShell window to run these commands
+Open a Windows PowerShell window or Windows command prompt (cmd) to run these commands
 
 ```
-mkdir build
-cd build
-cmake .. -G "Visual Studio 15 2017 Win64"
+cmake . -Bbuild -G "Visual Studio 15 2017 Win64"
 ```
+
+#### Compile Option 1
 
 Open Visual Studio.  File -> Open -> Project/Solution -> bcblib.sln
 
 - right click on ALL_BUILD -> build
 - right click on bcblibtest -> Debug -> Start New Instance
 
-Edit project properties as needed.  Transfer those flags to the CMakeLists.txt when satisfied.
-
-### Windows + Rtools (for mingw)
-
-#### Prereqs
-
-Install [Rtools](https://cran.r-project.org/bin/windows/Rtools/)
-
-#### CMake
-
-Open a Windows command prompt (cmd)
+#### Compile Option 2
 
 ```
-mkdir build
-cd build
-"C:\Program Files\CMake\bin\cmake.exe" -G "MinGW Makefiles" -DCMAKE_CXX_COMPILER=C:/Rtools/mingw_64/bin/g++.exe -DCMAKE_C_COMPILER=C:/Rtools/mingw_64/bin/gcc.exe -DCMAKE_MAKE_PROGRAM=C:/Rtools/mingw_64/bin/mingw32-make.exe -DCMAKE_BUILD_TYPE=Debug ..
-C:\Rtools\mingw_64\bin\mingw32-make.exe
-.\bclibtest\bclibtest.exe
+cmake --build build --target ALL_BUILD --config Release
+./build/bclibtest/Release/bclibtest.exe
 ```
