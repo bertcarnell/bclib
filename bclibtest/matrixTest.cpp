@@ -187,8 +187,8 @@ namespace bclibtest {
         bclib::Assert(*(expected.begin()), *it);
         bclib::Assert(expected[0], *it);
         
-        it = A.end();
-        bclib::Assert(expected[6] != *it);
+        it = A.end() - 1;
+        bclib::Assert(expected[5] == *it, "Iterator Test");
         ASSERT_NOTHROW(++it); // iterating past the end does not throw
         
         it = A.begin();
@@ -203,7 +203,6 @@ namespace bclibtest {
         bclib::Assert(expected[0], *rit);
         
         rit = A.rowwiseend();
-        bclib::Assert(expected[6] != *rit);
         ASSERT_NOTHROW(++rit); // iterating past the end does not throw
         
         rit = A.rowwisebegin();
@@ -218,7 +217,6 @@ namespace bclibtest {
         bclib::Assert(expected[0], *cit);
         
         cit = A.columnwiseend();
-        bclib::Assert(expected[6] != *cit);
         ASSERT_NOTHROW(++cit); // iterating past the end does not throw
         
         cit = A.columnwisebegin();
