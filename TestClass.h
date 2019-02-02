@@ -26,6 +26,7 @@
 #include <vector>
 #include <exception>
 #include <string>
+#include <memory>
 #include "simpleAssert.h"
 
 /**
@@ -33,24 +34,20 @@
  */
 #define START_TESTS(x) \
 	printf(x); \
-	std::vector<bclib::TestClass*> tests = std::vector<bclib::TestClass*>();
+	std::vector<std::unique_ptr<bclib::TestClass> > tests = std::vector<std::unique_ptr<bclib::TestClass> >();
 
 /**
  * Macro to create an individual test and instantiate it's class if it 
  * inherits from TestClass.h
  */
 #define CREATE_TEST(x) \
-	tests.push_back(dynamic_cast<bclib::TestClass*>(new x()))
+	tests.push_back(std::unique_ptr<bclib::TestClass>(dynamic_cast<bclib::TestClass*>(new x())));
 
 /**
  * Macro to run all the defined tests
  */
 #define EXECUTE_TESTS(x) \
 	bclib::TestClass::executeTests(tests); \
-	for (std::vector<bclib::TestClass*>::iterator it = tests.begin(); it != tests.end(); ++it) \
-	{ \
-		delete (*it); \
-	} \
 	tests.clear();
 
 /* #include <cstdlib>
@@ -103,7 +100,7 @@ namespace bclib
          * method used in the main.cpp to run unit test classes
          * @param tests
          */
-        static void executeTests(std::vector<TestClass*> tests)
+        static void executeTests(const std::vector<std::unique_ptr<bclib::TestClass> > & tests)
         {
             for (size_t i = 0; i < tests.size(); i++)
             {
