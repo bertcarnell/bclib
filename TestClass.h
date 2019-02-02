@@ -46,7 +46,12 @@
  * Macro to run all the defined tests
  */
 #define EXECUTE_TESTS(x) \
-	bclib::TestClass::executeTests(tests);
+	bclib::TestClass::executeTests(tests); \
+	for (std::vector<bclib::TestClass*>::iterator it = tests.begin(); it != tests.end(); ++it) \
+	{ \
+		delete (*it); \
+	} \
+	tests.clear();
 
 /* #include <cstdlib>
  * #include <vector>
