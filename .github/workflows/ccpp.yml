@@ -1,0 +1,15 @@
+name: C/C++ CI for bclib
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install Dependencies
+      run: sudo apt-get install cmake lcov
+    - name: Cmake build
+      run: cmake . -Bbuild -DCMAKE_BUILD_TYPE=Coverage; cmake --build build
