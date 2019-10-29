@@ -12,4 +12,4 @@ jobs:
     - name: Install Dependencies
       run: sudo apt-get install cmake lcov
     - name: Cmake build
-      run: cmake . -Bbuild -DCMAKE_BUILD_TYPE=Coverage; cmake --build build
+      run: cmake . -Bbuild -DCMAKE_BUILD_TYPE=Coverage; cmake --build build; ./build/bclibtest/bclibtest
