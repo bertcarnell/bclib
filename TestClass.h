@@ -89,13 +89,15 @@ namespace bclib
      * }
      * </code>
      */
-	class TestClass
-	{
-	public:
+    class TestClass
+    {
+    public:
         /**
          * run a set of unit tests in a TestClass
          */
-		virtual void Run(){}; // LCOV_EXCL_LINE
+        virtual void Run(){}; // LCOV_EXCL_LINE
+        virtual ~TestClass(){}; // LCOV_EXCL_LINE
+
         /**
          * method used in the main.cpp to run unit test classes
          * @param tests
@@ -115,7 +117,7 @@ namespace bclib
                 }
             }
         }
-	};
-}
+    }; // end TestClass
+} // end namespace
 
 #endif
