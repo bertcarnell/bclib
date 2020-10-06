@@ -1,34 +1,43 @@
-language: c++
+language: cpp
 
 dist: xenial
-sudo: false
+os: linux
 
-addons:
-  apt:
-    packages:
-      - lcov
-      - valgrind
-      - clang
-      - llvm
-
-script:
-  - cmake . -Bbuild -DCMAKE_BUILD_TYPE=Release # Test release build options
-  - cmake --build build
-  - ./build/bclibtest/bclibtest
-  - cmake . -Bdebugbuild -DCMAKE_BUILD_TYPE=Debug # Test debug with valgrind
-  - cmake --build debugbuild
-  - valgrind --leak-check=full ./debugbuild/bclibtest/bclibtest
-  - cmake . -Bcoveragebuild -DCMAKE_BUILD_TYPE=Coverage # Test debug build and coverage options
-  - cmake --build coveragebuild
-  - ./coveragebuild/bclibtest/bclibtest
-  - cmake . -Bclangbuild -DCMAKE_BUILD_TYPE=Clang # Clang build
-  - cmake --build clangbuild
-  - ./clangbuild/bclibtest/bclibtest
-
-after_success:
-  - cd coveragebuild
-  - lcov --directory bclibtest --capture --output-file bclibtest.info
-  - lcov --remove bclibtest.info 'bclibtest/*' '/usr/*' --output-file bclibtest.clean.info
-  - lcov --list bclibtest.clean.info
-  - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
+jobs:
+  include:
+    - script:
+        - cmake . -Bbuild -DCMAKE_BUILD_TYPE=Release # Test release build options
+        - cmake --build build
+        - ./build/bclibtest/bclibtest
+    - addons:
+        apt:
+          packages:
+            - valgrind
+      script:
+        - cmake . -Bdebugbuild -DCMAKE_BUILD_TYPE=Debug # Test debug with valgrind
+        - cmake --build debugbuild
+        - valgrind --leak-check=full --error-exitcode=1 --track-origins=yes ./debugbuild/bclibtest/bclibtest
+    - addons:
+        apt:
+          packages:
+            - clang
+            - llvm
+      script:
+        - cmake . -Bclangbuild -DCMAKE_BUILD_TYPE=Clang # Clang build
+        - cmake --build clangbuild
+        - ./clangbuild/bclibtest/bclibtest
+    - addons:
+        apt:
+          packages:
+            - lcov
+      script:
+        - cmake . -Bcoveragebuild -DCMAKE_BUILD_TYPE=Coverage # Test debug build and coverage options
+        - cmake --build coveragebuild
+        - ./coveragebuild/bclibtest/bclibtest
+      after_success:
+        - cd coveragebuild
+        - lcov --directory bclibtest --capture --output-file bclibtest.info
+        - lcov --remove bclibtest.info 'bclibtest/*' '/usr/*' --output-file bclibtest.clean.info
+        - lcov --list bclibtest.clean.info
+        - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
 
