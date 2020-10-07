@@ -184,11 +184,11 @@ namespace bclib
         }
         if (expected == 0.0)
         {
-            testlre = -1.0 * log10(abs(actual));
+            testlre = -1.0 * std::log10(std::abs(actual));
         }
         else
         {
-            testlre = -1.0 * log10(abs(actual-expected)) + log10(abs(expected));
+            testlre = -1.0 * std::log10(std::abs(actual-expected)) + std::log10(std::abs(expected));
         }
         
         //if (std::isinf(testlre)) // C99 only
