@@ -26,7 +26,7 @@ jobs:
       script:
         - cmake . -Bgccsanbuild -DCMAKE_BUILD_TYPE=Release -DBUILD_TYPE=Gcc-san
         - cmake --build gccsanbuild
-        - ./build/bclibtest/bclibtest
+        - ./gccsanbuild/bclibtest/bclibtest
     #####################
     - name: "clang build"
       addons:
