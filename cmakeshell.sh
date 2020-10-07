@@ -1,21 +1,40 @@
-# $1 should be Debug or Release or Clang
+# $1 should be Debug or Release or RelWithDebInfo
+# $2 should be Clang or Clang-san or Gcc-san or Coverage
 
-if [ "$(uname -s)" == "MSYS_NT-10.0-WOW" ]; then
+if [ "$(uname -s)" = "MSYS_NT-10.0-WOW" ]; then
   echo Windows Build
   cmake . -Bbuild -DCMAKE_BUILD_TYPE=$1 -G "Visual Studio 15 2017 Win64"
   cmake --build build --target ALL_BUILD --config $1
   ./build/bclibtest/$1/bclibtest.exe
-elif [ "$1" = "Clang" ]; then
+elif [ "$2" = "Clang" ]; then
   # sudo apt-get install clang llvm
   echo Clang Build
   export CC=clang
   export CXX=clang++
-  cmake . -Bbuild -DCMAKE_BUILD_TYPE=$1 -D_CMAKE_TOOLCHAIN_PREFIX='llvm-'  
-  cmake --build build
-  ./build/bclibtest/bclibtest
+  cmake . -Bclangbuild -DCMAKE_BUILD_TYPE=$1 -DBUILD_TYPE=$2 -D_CMAKE_TOOLCHAIN_PREFIX='llvm-'  
+  cmake --build clangbuild
+  ./clangbuild/bclibtest/bclibtest
+elif [ "$2" = "Clang-san" ]; then
+  # sudo apt-get install clang llvm
+  echo Clang SAN Build
+  export CC=clang
+  export CXX=clang++
+  cmake . -Bclangsanbuild -DCMAKE_BUILD_TYPE=$1 -DBUILD_TYPE=$2 -D_CMAKE_TOOLCHAIN_PREFIX='llvm-'  
+  cmake --build clangsanbuild
+  ./clangsanbuild/bclibtest/bclibtest
+elif [ "$2" = "Gcc-san" ]; then
+  echo Linux SAN Build
+  cmake . -Bgccsanbuild -DCMAKE_BUILD_TYPE=$1 -DBUILD_TYPE=$2
+  cmake --build gccsanbuild
+  ./gccsanbuild/bclibtest/bclibtest
+elif [ "$2" = "Coverage" ]; then
+  echo Linux Coverage Build
+  cmake . -Bcoveragebuild -DCMAKE_BUILD_TYPE=$1 -DBUILD_TYPE=$2
+  cmake --build coveragebuild
+  ./coveragebuild/bclibtest/bclibtest
 else
   echo Linux Build
-  cmake . -Bbuild -DCMAKE_BUILD_TYPE=$1
+  cmake . -Bbuild -DCMAKE_BUILD_TYPE=$1 -DBUILD_TYPE=$2
   cmake --build build
   ./build/bclibtest/bclibtest
 fi
