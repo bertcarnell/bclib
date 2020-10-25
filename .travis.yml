@@ -1,25 +1,72 @@
-language: c++
+language: cpp
 
-dist: xenial
-sudo: false
+dist: bionic
+os: linux
 
-addons:
-  apt:
-    packages:
-      - lcov
-
-script:
-  - cmake . -Bbuild -DCMAKE_BUILD_TYPE=Release # Test release build options
-  - cmake --build build
-  - ./build/bclibtest/bclibtest
-  - cmake . -Bcoveragebuild -DCMAKE_BUILD_TYPE=Coverage # Test debug build and coverage options
-  - cmake --build coveragebuild
-  - ./coveragebuild/bclibtest/bclibtest
-
-after_success:
-  - cd coveragebuild
-  - lcov --directory bclibtest --capture --output-file bclibtest.info
-  - lcov --remove bclibtest.info 'bclibtest/*' '/usr/*' --output-file bclibtest.clean.info
-  - lcov --list bclibtest.clean.info
-  - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
+jobs:
+  include:
+    #######################
+    - name: "Release Build"
+      script:
+        - cmake . -Bbuild -DCMAKE_BUILD_TYPE=Release -DBUILD_TYPE=Gcc
+        - cmake --build build
+        - ./build/bclibtest/bclibtest
+    ########################
+    - name: "Valgrind Build"
+      addons:
+        apt:
+          packages:
+            - valgrind
+      script:
+        - cmake . -Bdebugbuild -DCMAKE_BUILD_TYPE=Debug -DBUILD_TYPE=Gcc
+        - cmake --build debugbuild
+        - valgrind --leak-check=full --error-exitcode=1 --track-origins=yes ./debugbuild/bclibtest/bclibtest
+    ###################
+    - name: "gcc-san Build"
+      script:
+        - cmake . -Bgccsanbuild -DCMAKE_BUILD_TYPE=Release -DBUILD_TYPE=Gcc-san
+        - cmake --build gccsanbuild
+        - ./gccsanbuild/bclibtest/bclibtest
+    #####################
+    - name: "clang build"
+      addons:
+        apt:
+          packages:
+            - clang
+            - llvm
+      script:
+        - export CC=clang
+        - export CXX=clang++
+        - cmake . -Bclangbuild -DCMAKE_BUILD_TYPE=Release -DBUILD_TYPE=Clang -D_CMAKE_TOOLCHAIN_PREFIX='llvm-'
+        - cmake --build clangbuild
+        - ./clangbuild/bclibtest/bclibtest
+    #########################
+    - name: "clang-san build"
+      addons:
+        apt:
+          packages:
+            - clang
+            - llvm
+      script:
+        - export CC=clang
+        - export CXX=clang++
+        - cmake . -Bclangsanbuild -DCMAKE_BUILD_TYPE=Release -DBUILD_TYPE=Clang-san -D_CMAKE_TOOLCHAIN_PREFIX='llvm-'
+        - cmake --build clangsanbuild
+        - ./clangsanbuild/bclibtest/bclibtest
+    ########################
+    - name: "coverage build"
+      addons:
+        apt:
+          packages:
+            - lcov
+      script:
+        - cmake . -Bcoveragebuild -DCMAKE_BUILD_TYPE=Release -DBUILD_TYPE=Coverage
+        - cmake --build coveragebuild
+        - ./coveragebuild/bclibtest/bclibtest
+      after_success:
+        - cd coveragebuild
+        - lcov --directory bclibtest --capture --output-file bclibtest.info
+        - lcov --remove bclibtest.info 'bclibtest/*' '/usr/*' --output-file bclibtest.clean.info
+        - lcov --list bclibtest.clean.info
+        - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
 
