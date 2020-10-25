@@ -33,12 +33,12 @@ namespace bclib {
     {
     public:
         explicit RWarningException(const std::string & _Message)
-            : std::exception(_Message.c_str())
+            : std::exception::exception(_Message.c_str())
         {
         }
 
         explicit RWarningException(const char *_Message)
-            : std::exception(_Message)
+            : std::exception::exception(_Message)
         {
         }
     };
