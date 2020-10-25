@@ -38,7 +38,7 @@ namespace bclibtest {
         catch (bclib::RWarningException rwe)
         {
             bclib::Assert(1, test);
-            bclib::Assert(strcmp(rwe.what(), "Test One") == 0);
+            bclib::Assert(std::strcmp(rwe.what(), "Test One") == 0);
         }
         catch (std::runtime_error e)
         {
@@ -86,7 +86,7 @@ namespace bclibtest {
         }
         catch (bclib::RWarningException rwe)
         {
-            bclib::Assert(strcmp(ccs, rwe.what()));
+            bclib::Assert(std::strcmp(ccs, rwe.what()));
         }
 
         try {
