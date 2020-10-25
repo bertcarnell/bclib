@@ -24,6 +24,7 @@
 #include "TestClass.h"
 #include "simpleAssert.h"
 #include "RWarningException.h"
+#include <cstring> // for std::stcmp
 
 namespace bclibtest
 {
