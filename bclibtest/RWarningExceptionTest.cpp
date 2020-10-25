@@ -52,7 +52,7 @@ namespace bclibtest {
         try {
             throw bclib::RWarningException("Two Two Two");
         }
-        catch (std::runtime_error e)
+        catch (std::logic_error e)
         {
             bclib::Assert(false, "Should not catch another type derived from a std::exception");
         }

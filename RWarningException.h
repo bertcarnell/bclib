@@ -21,7 +21,7 @@
 #ifndef RWARNINGEXCEPTION_H
 #define	RWARNINGEXCEPTION_H
 
-#include <exception>
+#include <stdexcept>
 #include <string>
 
  /**
@@ -29,16 +29,16 @@
   */
 namespace bclib {
 
-    class RWarningException : public std::exception
+    class RWarningException : public std::runtime_error
     {
     public:
         explicit RWarningException(const std::string & _Message)
-            : std::exception::exception(_Message.c_str())
+            : std::runtime_error(_Message.c_str())
         {
         }
 
         explicit RWarningException(const char *_Message)
-            : std::exception::exception(_Message)
+            : std::runtime_error(_Message)
         {
         }
     };
