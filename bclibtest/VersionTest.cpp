@@ -31,7 +31,7 @@ namespace bclibtest {
 
     void VersionTest::testVersion()
     {
-        std::string sversion = std::string(bclib::version);
+        std::string sversion = std::string(bclib::getVersion());
         bclib::Assert(!sversion.empty());
         bclib::Assert(sversion.length() >= 5);
     }
