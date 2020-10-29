@@ -7,6 +7,12 @@ message(VERBOSE, "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 # BUILD_TYPE Clang, Coverage, Clang-san, Gcc-san
 message(VERBOSE, "BUILD_TYPE: ${BUILD_TYPE}")
 
+file(READ BCLIBVERSION version_data)
+string(STRIP "${version_data}" version_data)
+file(READ bclibVersion.h.in version_header)
+string(REGEX REPLACE "0[.]0[.]0" "${version_data}" new_version_header "${version_header}")
+file(WRITE bclibVersion.h "${new_version_header}")
+
 if (MSVC)
     message(VERBOSE, "Windows Build")
     # 26439 is special_noexcept
