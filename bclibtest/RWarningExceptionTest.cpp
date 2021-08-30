@@ -35,16 +35,16 @@ namespace bclibtest {
         try {
             throw bclib::RWarningException("Test One");
         }
-        catch (bclib::RWarningException rwe)
+        catch (bclib::RWarningException const& rwe)
         {
             bclib::Assert(1, test);
             bclib::Assert(std::strcmp(rwe.what(), "Test One") == 0);
         }
-        catch (std::runtime_error e)
+        catch (std::runtime_error const& e)
         {
             bclib::Assert(false, "Should not catch another type derived from a std::exception");
         }
-        catch (std::exception e)
+        catch (std::exception const& e)
         {
             bclib::Assert(false, "Should not catch a base std::exception after catching a RWarningException");
         }
@@ -52,7 +52,7 @@ namespace bclibtest {
         try {
             throw bclib::RWarningException("Two Two Two");
         }
-        catch (std::logic_error e)
+        catch (std::logic_error const& e)
         {
             bclib::Assert(false, "Should not catch another type derived from a std::exception");
         }
@@ -65,7 +65,7 @@ namespace bclibtest {
         try {
             throw bclib::RWarningException("Three");
         }
-        catch (std::exception e)
+        catch (std::exception const& e)
         {
             bclib::Assert(1, test);
             bclib::Assert(true);
@@ -84,7 +84,7 @@ namespace bclibtest {
         try {
             throw bclib::RWarningException(ccs);
         }
-        catch (bclib::RWarningException rwe)
+        catch (bclib::RWarningException const& rwe)
         {
             bclib::Assert(std::strcmp(ccs, rwe.what()));
         }
@@ -92,7 +92,7 @@ namespace bclibtest {
         try {
             throw bclib::RWarningException(ss);
         }
-        catch (bclib::RWarningException rwe)
+        catch (bclib::RWarningException const& rwe)
         {
             bclib::Assert(ss == rwe.what());
         }
