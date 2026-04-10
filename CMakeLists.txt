@@ -17,7 +17,7 @@ if (MSVC)
     message(VERBOSE, "Windows Build")
     # 26439 is special_noexcept
     # 4100 is The formal parameter is not referenced in the body of the function
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++14 /W4 /WX /wd4100 /wd26439")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17 /W4 /WX /wd4100 /wd26439")
     set(CMAKE_CXX_FLAGS_DEBUG "/Zi /Od")
     set(CMAKE_CXX_FLAGS_RELEASE "/Ox")
     set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/O2 /Zi")
@@ -25,7 +25,7 @@ elseif (BUILD_TYPE STREQUAL "Clang")
     message(VERBOSE, "Clang Build")
     # sudo apt-get install clang llvm
     # compiler options from https://www.stats.ox.ac.uk/pub/bdr/Rconfig/r-devel-linux-x86_64-fedora-clang
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -pedantic -frtti")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -pedantic -frtti")
     if (BUILD_TYPE STREQUAL "Clang-san")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address,undefined -fno-sanitize=float-divide-by-zero -fno-sanitize=alignment -fno-omit-frame-pointer")
         set(CMAKE_CXX_FLAGS_DEBUG "-g -O1")
@@ -40,7 +40,7 @@ elseif (BUILD_TYPE STREQUAL "Clang")
     endif()
 else ()
     message(VERBOSE, "Gcc Build")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -m64 -Wall -pedantic -mtune=native -Werror -Wno-unknown-pragmas -Wno-long-long")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -m64 -Wall -pedantic -mtune=native -Werror -Wno-unknown-pragmas -Wno-long-long")
 
     if (BUILD_TYPE STREQUAL "Coverage")
         message(VERBOSE, "Gcc Coverage Build")

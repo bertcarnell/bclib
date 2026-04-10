@@ -40,11 +40,11 @@ namespace bclibtest {
             bclib::Assert(1, test);
             bclib::Assert(std::strcmp(rwe.what(), "Test One") == 0);
         }
-        catch ([[maybe unused]] std::runtime_error const& e)
+        catch ([[maybe_unused]] std::runtime_error const& e)
         {
             bclib::Assert(false, "Should not catch another type derived from a std::exception");
         }
-        catch ([[maybe unused]] std::exception const& e)
+        catch ([[maybe_unused]] std::exception const& e)
         {
             bclib::Assert(false, "Should not catch a base std::exception after catching a RWarningException");
         }
@@ -52,7 +52,7 @@ namespace bclibtest {
         try {
             throw bclib::RWarningException("Two Two Two");
         }
-        catch ([[maybe unused]] std::logic_error const& e)
+        catch ([[maybe_unused]] std::logic_error const& e)
         {
             bclib::Assert(false, "Should not catch another type derived from a std::exception");
         }
@@ -65,7 +65,7 @@ namespace bclibtest {
         try {
             throw bclib::RWarningException("Three");
         }
-        catch ([[maybe unused]] std::exception const& e)
+        catch ([[maybe_unused]] std::exception const& e)
         {
             bclib::Assert(1, test);
             bclib::Assert(true);
