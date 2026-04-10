@@ -35,7 +35,7 @@
     { \
         exp; \
     } \
-    catch (std::exception const & e) \
+    catch ([[maybe_unused]] std::exception const & e) \
     { \
         throw bclib::assertion_error("Failed: an exception was thrown in assert_nothrow"); \
     }
@@ -51,10 +51,10 @@
         /*assertion_error will not be caught by the runtime_error or logic_error*/ \
         throw bclib::assertion_error("Failed: no exception was thrown in assert_throw"); \
     } \
-    catch (std::runtime_error const& re) \
+    catch ([[maybe_unused]] std::runtime_error const& re) \
     { \
     } \
-    catch (std::logic_error const& le) \
+    catch ([[maybe_unused]] std::logic_error const& le) \
     { \
     }
 
@@ -68,7 +68,7 @@
         exp; \
         throw std::runtime_error("Failed: no exception was thrown in assert_noassertionerror"); \
     } \
-    catch (bclib::assertion_error const& ae) \
+    catch ([[maybe_unused]] bclib::assertion_error const& ae) \
     { \
         /* expected */ \
     }
