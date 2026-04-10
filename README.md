@@ -3,9 +3,9 @@ bclib
 
 bertcarnell Template Library (bclib) for C++ utility headers
 
-|<sub>Linux & MacOS</sub>|<sub>Windows</sub>|<sub>Code Coverage</sub>|<sub>Github Actions</sub>|
-|:---:|:---:|:---:|:---:|
-|[![Build Status](https://travis-ci.org/bertcarnell/bclib.svg?branch=master)](https://travis-ci.org/bertcarnell/bclib)|[![Build status](https://ci.appveyor.com/api/projects/status/ew4nolsitxr5sl5r?svg=true)](https://ci.appveyor.com/project/bertcarnell/bclib)|[![codecov](https://codecov.io/gh/bertcarnell/bclib/branch/master/graph/badge.svg)](https://codecov.io/gh/bertcarnell/bclib)|![CMake](https://github.com/bertcarnell/bclib/workflows/CMake/badge.svg)|
+|<sub>Code Coverage</sub>|<sub>Github Actions</sub>|
+|:---:|:---:|
+|[![codecov](https://codecov.io/gh/bertcarnell/bclib/branch/master/graph/badge.svg)](https://codecov.io/gh/bertcarnell/bclib)|![CMake](https://github.com/bertcarnell/bclib/workflows/CMake/badge.svg)|
 
 ## Used in packages...
 
