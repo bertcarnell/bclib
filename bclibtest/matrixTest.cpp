@@ -65,7 +65,7 @@ namespace bclibtest {
                 bclib::Assert(expected[i*B.colsize() + j], B(i,j), "(i,j) access");
             }
         }
-        std::vector<int> actual = B.getDataVector();
+        const std::vector<int> & actual = B.getDataVector();
         for (bclib::matrix<int>::size_type i = 0; i < B.rowsize(); i++)
         {
             for (bclib::matrix<int>::size_type j = 0; j < B.colsize(); j++)

@@ -42,7 +42,7 @@
 
 /**
  * Assert that the expression throws an error.  It is caught if is derived from
- * runtime_error or from logic_error
+ * std::runtime_error or from std::logic_error
  */
 #define ASSERT_THROW(exp) \
     try \

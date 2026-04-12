@@ -21,9 +21,9 @@
 #ifndef RWARNINGEXCEPTIONTEST_H
 #define	RWARNINGEXCEPTIONTEST_H
 
-#include "TestClass.h"
-#include "simpleAssert.h"
-#include "RWarningException.h"
+#include "../TestClass.h"
+#include "../simpleAssert.h"
+#include "../RWarningException.h"
 #include <cstring> // for std::stcmp
 
 namespace bclibtest

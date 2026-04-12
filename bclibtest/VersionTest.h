@@ -23,9 +23,9 @@
 
 #include <algorithm>
 #include <numeric>
-#include "TestClass.h"
-#include "simpleAssert.h"
-#include "bclibVersion.h"
+#include "../TestClass.h"
+#include "../simpleAssert.h"
+#include "../bclibVersion.h"
 
 namespace bclibtest
 {
