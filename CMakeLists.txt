@@ -17,7 +17,8 @@ if (MSVC)
     message(VERBOSE, "Windows Build")
     # 26439 is special_noexcept
     # 4100 is The formal parameter is not referenced in the body of the function
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17 /W4 /WX /wd4100 /wd26439")
+    # 4702 is unreachable code for the assertion code
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17 /W4 /WX /wd4100 /wd26439 /wd4702")
     set(CMAKE_CXX_FLAGS_DEBUG "/Zi /Od")
     set(CMAKE_CXX_FLAGS_RELEASE "/Ox")
     set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/O2 /Zi")

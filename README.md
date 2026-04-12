@@ -41,27 +41,17 @@ genhtml -o coverage bclibtest.clean.info
 
 #### Prereqs
 
-- Install [Visual Studio Community 2017](https://visualstudio.microsoft.com/vs/community/) with visual c++ support.
+- Install [Visual Studio Code and the Visual Studio C++ Expansion](https://code.visualstudio.com/docs/cpp/config-msvc)
 - Install [CMake](https://cmake.org/) for Windows
 
 #### CMake
 
-Open a Windows PowerShell window or Windows command prompt (cmd) to run these commands
+Open a Developer Command Prompt
 
 ```
-cmake . -Bbuild -G "Visual Studio 15 2017 Win64"
-```
-
-#### Compile Option 1
-
-Open Visual Studio.  File -> Open -> Project/Solution -> bcblib.sln
-
-- right click on ALL_BUILD -> build
-- right click on bcblibtest -> Debug -> Start New Instance
-
-#### Compile Option 2
-
-```
-cmake --build build --target ALL_BUILD --config Release
-./build/bclibtest/Release/bclibtest.exe
+cmake . -DCMAKE_BUILD_TYPE=Release -Bbuild -G "NMake Makefiles"
+cmake --build build --config Release
+cd build
+nmake
+bclibtest/bclibtest.exe
 ```

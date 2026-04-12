@@ -38,6 +38,10 @@
     catch ([[maybe_unused]] std::exception const & e) \
     { \
         throw bclib::assertion_error("Failed: an exception was thrown in assert_nothrow"); \
+    } \
+    catch (...) \
+    { \
+        throw bclib::assertion_error("Failed: an exception was thrown in assert_nothrow, but it was not derived from std::exception"); \
     }
 
 /**
@@ -56,6 +60,10 @@
     } \
     catch ([[maybe_unused]] std::logic_error const& le) \
     { \
+    } \
+    catch(...) \
+    { \
+        throw bclib::assertion_error("Failed: an exception was thrown in ASSERT_THROW, but it was not derived from std::runtime_error or std::logic_error"); \
     }
 
 /**
@@ -71,6 +79,10 @@
     catch ([[maybe_unused]] bclib::assertion_error const& ae) \
     { \
         /* expected */ \
+    } \
+    catch (...) \
+    { \
+        throw std::runtime_error("Failed: an exception was thrown in ASSERT_ASSERTIONERROR, but it was not derived from bclib::assertion_error"); \
     }
 
 namespace bclib
