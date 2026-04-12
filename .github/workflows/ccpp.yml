@@ -40,16 +40,22 @@ jobs:
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build . --config ${{matrix.build_type}}
 
-    - name: Test Debug Valgrind
+    - name: Test Debug Linux Valgrind
       working-directory: ${{runner.workspace}}/build
       shell: bash
       if: matrix.build_type == 'Debug' && matrix.os == 'ubuntu-latest'
       run: |
         sudo apt-get install valgrind
         valgrind --leak-check=full --error-exitcode=1 --track-origins=yes ./bclibtest/bclibtest
-        
-    - name: Test Release
+
+    - name: Windows
       working-directory: ${{runner.workspace}}/build
       shell: bash
-      if: matrix.build_type == 'Release'
+      if: matrix.os == 'windows-latest'
+      run: bclibtest\bclibtest.exe
+
+    - name: Test Release Linux
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
+      if: matrix.build_type == 'Release' && matrix.os == 'ubuntu-latest'
       run: ./bclibtest/bclibtest
