@@ -55,7 +55,7 @@ jobs:
       run: |
         dir
         dir bclibtest
-        bclibtest\\bclibtest.exe
+        bclibtest\\${{matrix.build_type}}\\bclibtest.exe
 
     - name: Test Linux & Mac
       working-directory: ${{runner.workspace}}/build
