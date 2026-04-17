@@ -53,8 +53,6 @@ jobs:
       shell: bash
       if: matrix.os == 'windows-latest'
       run: |
-        dir
-        dir bclibtest
         bclibtest\\${{matrix.build_type}}\\bclibtest.exe
 
     - name: Test Linux & Mac
